@@ -1,0 +1,4 @@
+<PropertyGroup>
+    <Copyright>Copyright © 2022 Your Company</Copyright>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+</PropertyGroup>
