@@ -1,4 +1,12 @@
-<PropertyGroup>
-    <Copyright>Copyright © 2022 Your Company</Copyright>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
-</PropertyGroup>
+<Project>
+    <PropertyGroup>
+        <Copyright>Copyright © 2022 Your Company</Copyright>
+        <NoWarn>$(NoWarn);CS1591</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup Label="Build">
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+</Project>
