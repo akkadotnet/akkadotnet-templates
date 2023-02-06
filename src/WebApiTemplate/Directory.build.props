@@ -9,4 +9,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <PropertyGroup Label="Dependencies">
+    <PbmVersion>1.2.2</PbmVersion>
+    <MicrosoftExtensionsVersion>7.0.0</MicrosoftExtensionsVersion>
+  </PropertyGroup>
 </Project>

@@ -2,13 +2,19 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
-  <!-- App Package Versions -->
+  <!-- Akka.NET Package Versions -->
   <ItemGroup>
     <PackageVersion Include="Akka" Version="1.4.49" />
     <PackageVersion Include="Akka.Cluster.Hosting" Version="1.0.2" />
+    <PackageVersion Include="Akka.HealthCheck.Hosting.Web" Version="1.0.0" />
     <PackageVersion Include="Petabridge.Cmd.Cluster.Sharding" Version="$(PbmVersion)" />
     <PackageVersion Include="Petabridge.Cmd.Cluster" Version="$(PbmVersion)" />
     <PackageVersion Include="Petabridge.Cmd.Remote" Version="$(PbmVersion)" />
+  </ItemGroup>
+  <!-- ASP.NET Core Package Versions -->
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsVersion)" />
   </ItemGroup>
   <!-- Test Package Versions -->
