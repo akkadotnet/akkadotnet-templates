@@ -38,12 +38,11 @@ jobs:
         working-directory: src/${{matrix.template}}
 
   docker:
-    name: Docker-${{matrix.template}}-${{matrix.os}}
-    runs-on: ${{matrix.os}}
+    name: Docker-${{matrix.template}}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         template: ["WebApiTemplate"]
-        os: [ubuntu-latest]
     steps:
       - name: "Checkout"
         uses: actions/checkout@v3.0.2
