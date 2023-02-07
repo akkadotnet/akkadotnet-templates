@@ -15,15 +15,15 @@ namespace WebApiTemplate.App.Configuration;
 
 public static class AkkaConfiguration
 {
-    public static IServiceCollection ConfigureWebApiAkka(this IServiceCollection services, IConfiguration configuration, Action<AkkaConfigurationBuilder> additionalConfig)
+    public static IServiceCollection ConfigureWebApiAkka(this IServiceCollection services, IConfiguration configuration, Action<AkkaConfigurationBuilder, IServiceProvider> additionalConfig)
     {
         var akkaSettings = configuration.GetRequiredSection("AkkaSettings").Get<AkkaSettings>();
         Debug.Assert(akkaSettings != null, nameof(akkaSettings) + " != null");
         
-        return services.AddAkka(akkaSettings.ActorSystemName, builder =>
+        return services.AddAkka(akkaSettings.ActorSystemName, (builder, sp) =>
         {
             builder.ConfigureActorSystem(akkaSettings);
-            additionalConfig(builder);
+            additionalConfig(builder, sp);
         });
     }
 

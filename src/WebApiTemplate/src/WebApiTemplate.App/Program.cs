@@ -1,3 +1,5 @@
+using Akka.HealthCheck.Hosting;
+using Akka.HealthCheck.Hosting.Web;
 using WebApiTemplate.App.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,14 +11,16 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?
  */
 builder.Configuration
     .AddJsonFile("appsettings.json")
-    .AddJsonFile($"appsettings.{environment}.json", optional:true)
+    .AddJsonFile($"appsettings.{environment}.json", optional: true)
     .AddEnvironmentVariables();
 
 // Add services to the container.
-builder.Services.ConfigureWebApiAkka(builder.Configuration, akkaConfigurationBuilder =>
+builder.Services.WithAkkaHealthCheck(HealthCheckType.All);
+builder.Services.ConfigureWebApiAkka(builder.Configuration, (akkaConfigurationBuilder, serviceProvider) =>
 {
     // we configure instrumentation separately from the internals of the ActorSystem
     akkaConfigurationBuilder.ConfigurePetabridgeCmd();
+    akkaConfigurationBuilder.WithWebHealthCheck(serviceProvider);
 });
 
 builder.Services.AddControllers();
@@ -34,7 +38,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.MapAkkaHealthCheckRoutes(optionConfigure: (_, opt) =>
+{
+    // Use a custom response writer to output a json of all reported statuses
+    opt.ResponseWriter = Helper.JsonResponseWriter;
+}); // needed for Akka.HealthCheck
 app.UseAuthorization();
 
 app.MapControllers();
