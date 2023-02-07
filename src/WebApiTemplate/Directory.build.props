@@ -2,6 +2,7 @@
     <PropertyGroup>
         <Copyright>Copyright © 2022 Your Company</Copyright>
         <NoWarn>$(NoWarn);CS1591</NoWarn>
+        <VersionPrefix>1.0.0</VersionPrefix>
     </PropertyGroup>
 
     <PropertyGroup Label="Build">
@@ -11,7 +12,7 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Dependencies">
-    <PbmVersion>1.2.2</PbmVersion>
-    <MicrosoftExtensionsVersion>7.0.0</MicrosoftExtensionsVersion>
-  </PropertyGroup>
+        <PbmVersion>1.2.2</PbmVersion>
+        <MicrosoftExtensionsVersion>7.0.0</MicrosoftExtensionsVersion>
+    </PropertyGroup>
 </Project>
