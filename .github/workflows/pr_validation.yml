@@ -31,14 +31,14 @@ jobs:
             7.0.x
           global-json-file: "./global.json"
       - name: "dotnet build"
-        workingdirectory: ./src/${{matrix.template}}
         run: dotnet build -c Release
         shell: pwsh
-      - name: "dotnet test"
         workingdirectory: ./src/${{matrix.template}}
+      - name: "dotnet test"
         run: dotnet test -c Release
         shell: pwsh
-      - name: "dotnet docker"
         workingdirectory: ./src/${{matrix.template}}
+      - name: "dotnet docker"
         run: dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer
         shell: pwsh
+        workingdirectory: ./src/${{matrix.template}}
