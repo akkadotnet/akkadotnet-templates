@@ -24,7 +24,6 @@
         <PackageReference Include="Microsoft.NET.Build.Containers" />
         <PackageReference Include="Petabridge.Cmd.Cluster" />
         <PackageReference Include="Petabridge.Cmd.Cluster.Sharding" />
-        <PackageReference Include="Petabridge.Cmd.Host" />
         <PackageReference Include="Petabridge.Cmd.Remote" />
         <PackageReference Include="Swashbuckle.AspNetCore" />
     </ItemGroup>
@@ -37,7 +36,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\WebApiTemplate.Domain\WebApiTemplate.Domain.csproj" />
-      <ProjectReference Include="..\src\WebApiTemplate.Domain\WebApiTemplate.Domain.csproj" />
     </ItemGroup>
 
 </Project>

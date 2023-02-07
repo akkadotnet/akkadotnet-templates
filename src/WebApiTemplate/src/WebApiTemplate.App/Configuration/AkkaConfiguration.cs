@@ -15,7 +15,7 @@ namespace WebApiTemplate.App.Configuration;
 
 public static class AkkaConfiguration
 {
-    public static IServiceCollection ConfigureWebApiAkka(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureWebApiAkka(this IServiceCollection services, IConfiguration configuration, Action<AkkaConfigurationBuilder> additionalConfig)
     {
         var akkaSettings = configuration.GetRequiredSection("AkkaSettings").Get<AkkaSettings>();
         Debug.Assert(akkaSettings != null, nameof(akkaSettings) + " != null");
@@ -23,6 +23,7 @@ public static class AkkaConfiguration
         return services.AddAkka(akkaSettings.ActorSystemName, builder =>
         {
             builder.ConfigureActorSystem(akkaSettings);
+            additionalConfig(builder);
         });
     }
 
@@ -33,7 +34,7 @@ public static class AkkaConfiguration
             .ConfigurePersistence(settings)
             .ConfigureCounterActors(settings);
     }
-    
+
     public static AkkaConfigurationBuilder ConfigureNetwork(this AkkaConfigurationBuilder builder,
         AkkaSettings settings)
     {
