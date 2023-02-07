@@ -2,6 +2,9 @@
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
+EXPOSE 8558
+EXPOSE 8081
+EXPOSE 9110
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src

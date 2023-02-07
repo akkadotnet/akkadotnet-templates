@@ -10,6 +10,7 @@
     <PackageVersion Include="Akka.Management" Version="1.0.1" />
     <PackageVersion Include="Petabridge.Cmd.Cluster.Sharding" Version="$(PbmVersion)" />
     <PackageVersion Include="Petabridge.Cmd.Cluster" Version="$(PbmVersion)" />
+    <PackageVersion Include="Petabridge.Cmd.Host" Version="1.2.2" />
     <PackageVersion Include="Petabridge.Cmd.Remote" Version="$(PbmVersion)" />
   </ItemGroup>
   <!-- ASP.NET Core Package Versions -->
