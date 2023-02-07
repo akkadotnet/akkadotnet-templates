@@ -37,6 +37,8 @@ public class AkkaSettings
 {
     public string ActorSystemName { get; set; }= "AkkaWeb";
 
+    public bool UseClustering { get; set; } = true;
+
     public RemoteOptions RemoteOptions { get; set; } = new RemoteOptions();
 
     public ClusterOptions ClusterOptions { get; set; } = new ClusterOptions();

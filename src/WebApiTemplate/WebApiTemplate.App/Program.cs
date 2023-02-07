@@ -1,3 +1,5 @@
+using WebApiTemplate.App.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
@@ -11,7 +13,7 @@ builder.Configuration
     .AddEnvironmentVariables();
 
 // Add services to the container.
-
+builder.Services.ConfigureWebApiAkka(builder.Configuration);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

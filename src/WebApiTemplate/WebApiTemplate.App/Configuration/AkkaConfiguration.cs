@@ -1,4 +1,5 @@
-﻿using Akka.Actor;
+﻿using System.Diagnostics;
+using Akka.Actor;
 using Akka.Cluster.Hosting;
 using Akka.Cluster.Sharding;
 using Akka.Hosting;
@@ -6,6 +7,7 @@ using Akka.Management;
 using Akka.Management.Cluster.Bootstrap;
 using Akka.Persistence.Hosting;
 using Akka.Remote.Hosting;
+using Akka.Util;
 using WebApiTemplate.App.Actors;
 using WebApiTemplate.Domain;
 
@@ -13,9 +15,31 @@ namespace WebApiTemplate.App.Configuration;
 
 public static class AkkaConfiguration
 {
-    public static AkkaConfigurationBuilder ConfigureWebApiActorSystem(this AkkaConfigurationBuilder builder,
+    public static IServiceCollection ConfigureWebApiAkka(this IServiceCollection services, IConfiguration configuration)
+    {
+        var akkaSettings = configuration.GetRequiredSection("AkkaSettings").Get<AkkaSettings>();
+        Debug.Assert(akkaSettings != null, nameof(akkaSettings) + " != null");
+        
+        return services.AddAkka(akkaSettings.ActorSystemName, builder =>
+        {
+            builder.ConfigureActorSystem(akkaSettings);
+        });
+    }
+
+    public static AkkaConfigurationBuilder ConfigureActorSystem(this AkkaConfigurationBuilder builder, AkkaSettings settings)
+    {
+        return builder
+            .ConfigureNetwork(settings)
+            .ConfigurePersistence(settings)
+            .ConfigureCounterActors(settings);
+    }
+    
+    public static AkkaConfigurationBuilder ConfigureNetwork(this AkkaConfigurationBuilder builder,
         AkkaSettings settings)
     {
+        if (!settings.UseClustering)
+            return builder;
+        
         var b = builder
             .WithRemoting(settings.RemoteOptions);
 
@@ -49,6 +73,10 @@ public static class AkkaConfiguration
                     throw new ArgumentOutOfRangeException();
             }
         }
+        else
+        {
+            b = b.WithClustering(settings.ClusterOptions);
+        }
 
         return b;
     }
@@ -62,6 +90,26 @@ public static class AkkaConfiguration
     public static AkkaConfigurationBuilder ConfigureCounterActors(this AkkaConfigurationBuilder builder,
         AkkaSettings settings)
     {
+        var extractor = CreateCounterMessageRouter();
+
+        if (settings.UseClustering)
+        {
+            return builder.WithShardRegion<CounterActor>("counter",
+                (system, registry, resolver) => s => Props.Create(() => new CounterActor(s)),
+                extractor, settings.ShardOptions);
+        }
+        else
+        {
+            return builder.WithActors((system, registry, resolver) =>
+            {
+                var parent = system.ActorOf(GenericChildPerEntityParent.Props(extractor, s => Props.Create(() => new CounterActor(s))), "counters");
+                registry.Register<CounterActor>(parent);
+            });
+        }
+    }
+
+    public static HashCodeMessageExtractor CreateCounterMessageRouter()
+    {
         var extractor = HashCodeMessageExtractor.Create(30, o =>
         {
             return o switch
@@ -71,9 +119,6 @@ public static class AkkaConfiguration
                 _ => string.Empty
             };
         }, o => o);
-        
-        return builder.WithShardRegion<CounterActor>("counter",
-            (system, registry, resolver) => s => Props.Create(() => new CounterActor(s)),
-            extractor, settings.ShardOptions);
+        return extractor;
     }
 }
