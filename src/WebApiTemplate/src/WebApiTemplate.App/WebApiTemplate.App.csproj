@@ -26,7 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\WebApiTemplate.Domain\WebApiTemplate.Domain.csproj" />
+      <ProjectReference Include="..\WebApiTemplate.Domain\WebApiTemplate.Domain.csproj" />
     </ItemGroup>
 
 </Project>
