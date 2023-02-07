@@ -13,7 +13,12 @@ builder.Configuration
     .AddEnvironmentVariables();
 
 // Add services to the container.
-builder.Services.ConfigureWebApiAkka(builder.Configuration);
+builder.Services.ConfigureWebApiAkka(builder.Configuration, akkaConfigurationBuilder =>
+{
+    // we configure instrumentation separately from the internals of the ActorSystem
+    akkaConfigurationBuilder.ConfigurePetabridgeCmd();
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
