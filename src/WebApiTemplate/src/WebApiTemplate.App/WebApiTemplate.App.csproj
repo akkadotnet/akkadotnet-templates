@@ -5,13 +5,23 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <ContainerImageName>webpapitemplate-app</ContainerImageName>
     </PropertyGroup>
+
+    <ItemGroup>
+        <ContainerPort Include="80" Type="tcp" />
+        <ContainerPort Include="443" Type="tcp" />
+        <ContainerPort Include="8558" Type="tcp" />
+        <ContainerPort Include="8081" Type="tcp" />
+        <ContainerPort Include="9110" Type="tcp" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Akka.Cluster.Hosting" />
         <PackageReference Include="Akka.HealthCheck.Hosting.Web" />
         <PackageReference Include="Akka.Management" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+        <PackageReference Include="Microsoft.NET.Build.Containers" />
         <PackageReference Include="Petabridge.Cmd.Cluster" />
         <PackageReference Include="Petabridge.Cmd.Cluster.Sharding" />
         <PackageReference Include="Petabridge.Cmd.Host" />
@@ -27,6 +37,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\WebApiTemplate.Domain\WebApiTemplate.Domain.csproj" />
+      <ProjectReference Include="..\src\WebApiTemplate.Domain\WebApiTemplate.Domain.csproj" />
     </ItemGroup>
 
 </Project>
