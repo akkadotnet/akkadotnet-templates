@@ -33,12 +33,12 @@ jobs:
       - name: "dotnet build"
         run: dotnet build -c Release
         shell: pwsh
-        workingdirectory: ./src/${{matrix.template}}
+        workingdirectory: src/${{matrix.template}}
       - name: "dotnet test"
         run: dotnet test -c Release
         shell: pwsh
-        workingdirectory: ./src/${{matrix.template}}
+        workingdirectory: src/${{matrix.template}}
       - name: "dotnet docker"
         run: dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer
         shell: pwsh
-        workingdirectory: ./src/${{matrix.template}}
+        workingdirectory: src/${{matrix.template}}
