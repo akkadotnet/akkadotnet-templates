@@ -10,6 +10,7 @@
     <ItemGroup>
         <PackageReference Include="Akka.Cluster.Hosting" />
         <PackageReference Include="Akka.HealthCheck.Hosting.Web" />
+        <PackageReference Include="Akka.Management" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
         <PackageReference Include="Swashbuckle.AspNetCore" />
     </ItemGroup>
@@ -21,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Configuration" />
+      <ProjectReference Include="..\src\WebApiTemplate.Domain\WebApiTemplate.Domain.csproj" />
     </ItemGroup>
 
 </Project>

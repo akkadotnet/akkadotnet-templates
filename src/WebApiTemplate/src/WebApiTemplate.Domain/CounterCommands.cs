@@ -12,7 +12,7 @@ public sealed record IncrementCounterCommand(string CounterId, int Amount) : ICo
 public sealed record SetCounterCommand(string CounterId, int Value) : ICounterCommand;
 
 public sealed record CounterCommandResponse
-    (string CounterId, bool IsSuccess, ICounterEvent? Event, string? ErrorMessage = null) : ICounterCommand;
+    (string CounterId, bool IsSuccess, ICounterEvent? Event = null, string? ErrorMessage = null) : ICounterCommand;
     
 public sealed record SubscribeToCounter(string CounterId, IActorRef Subscriber) : ICounterCommand;
 

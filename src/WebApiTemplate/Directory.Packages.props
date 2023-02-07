@@ -7,6 +7,7 @@
     <PackageVersion Include="Akka" Version="1.4.49" />
     <PackageVersion Include="Akka.Cluster.Hosting" Version="1.0.2" />
     <PackageVersion Include="Akka.HealthCheck.Hosting.Web" Version="1.0.0" />
+    <PackageVersion Include="Akka.Management" Version="1.0.1" />
     <PackageVersion Include="Petabridge.Cmd.Cluster.Sharding" Version="$(PbmVersion)" />
     <PackageVersion Include="Petabridge.Cmd.Cluster" Version="$(PbmVersion)" />
     <PackageVersion Include="Petabridge.Cmd.Remote" Version="$(PbmVersion)" />
