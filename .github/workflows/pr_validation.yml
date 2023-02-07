@@ -37,5 +37,6 @@ jobs:
         run: dotnet test -c Release
         working-directory: src/${{matrix.template}}
       - name: "dotnet docker"
+        if: ${{matrix.os}} != 'windows-latest'
         run: dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer
         working-directory: src/${{matrix.template}}
