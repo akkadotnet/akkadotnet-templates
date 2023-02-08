@@ -41,7 +41,7 @@ public class CounterController : ControllerBase
     [HttpPut("{counterId}")]
     public async Task<IActionResult> Put(string counterId, [FromBody] int counterValue)
     {
-        var result = await _counterActor.Ask<CounterCommandResponse>(new IncrementCounterCommand(counterId, counterValue), TimeSpan.FromSeconds(5));
+        var result = await _counterActor.Ask<CounterCommandResponse>(new SetCounterCommand(counterId, counterValue), TimeSpan.FromSeconds(5));
         if (!result.IsSuccess)
         {
             return BadRequest();

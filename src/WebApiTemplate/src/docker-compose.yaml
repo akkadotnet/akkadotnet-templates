@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:latest
+    hostname: azurite
+  pbmhost:
+    image: webpapitemplate-app:latest
+    hostname: pbm-host
+    ports:
+      - '9110:9110'
+      - '8080:80'
+      - '8079:443'
+    environment:
+      ASPNETCORE_ENVIRONMENT: Azure
+      ConnectionStrings__Azurite: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;TableEndpoint=http://azurite:10002/devstoreaccount1;"
+      AkkaSettings__AkkaManagementOptions__Port: "8558"
+      AkkaSettings__RemoteOptions__Port: "8557"
+    depends_on:
+      - "azurite"
+
+  hosts:
+    image: webpapitemplate-app:latest
+    deploy:
+      replicas: 3
+    environment:
+      ASPNETCORE_ENVIRONMENT: Azure
+      ConnectionStrings__Azurite: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;TableEndpoint=http://azurite:10002/devstoreaccount1;"
+      AkkaSettings__AkkaManagementOptions__Port: "8558"
+      AkkaSettings__RemoteOptions__Port: "8557"
+    depends_on:
+      - "azurite"

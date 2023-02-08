@@ -2,9 +2,13 @@
 using Akka.Actor;
 using Akka.Cluster.Hosting;
 using Akka.Cluster.Sharding;
+using Akka.Configuration;
+using Akka.Discovery.Azure;
 using Akka.Hosting;
 using Akka.Management;
 using Akka.Management.Cluster.Bootstrap;
+using Akka.Persistence.Azure;
+using Akka.Persistence.Azure.Hosting;
 using Akka.Persistence.Hosting;
 using Akka.Remote.Hosting;
 using Akka.Util;
@@ -22,25 +26,29 @@ public static class AkkaConfiguration
         
         return services.AddAkka(akkaSettings.ActorSystemName, (builder, sp) =>
         {
-            builder.ConfigureActorSystem(akkaSettings);
+            builder.ConfigureActorSystem(akkaSettings, configuration);
             additionalConfig(builder, sp);
         });
     }
 
-    public static AkkaConfigurationBuilder ConfigureActorSystem(this AkkaConfigurationBuilder builder, AkkaSettings settings)
+    public static AkkaConfigurationBuilder ConfigureActorSystem(this AkkaConfigurationBuilder builder, AkkaSettings settings, IConfiguration configuration)
     {
         return builder
-            .ConfigureNetwork(settings)
-            .ConfigurePersistence(settings)
+            .ConfigureLoggers(configBuilder =>
+            {
+                configBuilder.LogConfigOnStart = settings.LogConfigOnStart;
+            })
+            .ConfigureNetwork(settings, configuration)
+            .ConfigurePersistence(settings, configuration)
             .ConfigureCounterActors(settings);
     }
 
     public static AkkaConfigurationBuilder ConfigureNetwork(this AkkaConfigurationBuilder builder,
-        AkkaSettings settings)
+        AkkaSettings settings, IConfiguration configuration)
     {
         if (!settings.UseClustering)
             return builder;
-        
+
         var b = builder
             .WithRemoting(settings.RemoteOptions);
 
@@ -67,7 +75,19 @@ public static class AkkaConfiguration
                 case DiscoveryMethod.AwsEc2TagBased:
                     break;
                 case DiscoveryMethod.AzureTableStorage:
+                {
+                    var connectionStringName = configuration.GetSection("AzureStorageSettings")
+                        .Get<AzureStorageSettings>()?.ConnectionStringName;
+                    Debug.Assert(connectionStringName != null, nameof(connectionStringName) + " != null");
+                    var connectionString = configuration.GetConnectionString(connectionStringName);
+
+                    b = b.WithAzureDiscovery(options =>
+                    {
+                        options.ServiceName = settings.AkkaManagementOptions.ServiceName;
+                        options.ConnectionString = connectionString;
+                    });
                     break;
+                }
                 case DiscoveryMethod.Config:
                     break;
                 default:
@@ -81,11 +101,50 @@ public static class AkkaConfiguration
 
         return b;
     }
+    
+    public static Config GetPersistenceHocon(string connectionString)
+    {
+        return $@"
+            akka.persistence {{
+                journal {{
+                    plugin = ""akka.persistence.journal.azure-table""
+                    azure-table {{
+                        class = ""Akka.Persistence.Azure.Journal.AzureTableStorageJournal, Akka.Persistence.Azure""
+                        connection-string = ""{connectionString}""
+                    }}
+                }}
+                 snapshot-store {{
+                     plugin = ""akka.persistence.snapshot-store.azure-blob-store""
+                     azure-blob-store {{
+                        class = ""Akka.Persistence.Azure.Snapshot.AzureBlobSnapshotStore, Akka.Persistence.Azure""
+                        connection-string = ""{connectionString}""
+                    }}
+                }}
+            }}";
+    }
 
     public static AkkaConfigurationBuilder ConfigurePersistence(this AkkaConfigurationBuilder builder,
-        AkkaSettings settings)
+        AkkaSettings settings, IConfiguration configuration)
     {
-        return builder.WithInMemoryJournal().WithInMemorySnapshotStore();
+        switch (settings.PersistenceMode)
+        {
+            case PersistenceMode.InMemory:
+                return builder.WithInMemoryJournal().WithInMemorySnapshotStore();
+            case PersistenceMode.Azure:
+            {
+                var connectionStringName = configuration.GetSection("AzureStorageSettings")
+                    .Get<AzureStorageSettings>()?.ConnectionStringName;
+                Debug.Assert(connectionStringName != null, nameof(connectionStringName) + " != null");
+                var connectionString = configuration.GetConnectionString(connectionStringName);
+                // return builder.WithAzurePersistence(); // doesn't work right now
+                return builder.AddHocon(GetPersistenceHocon(connectionString).
+                    WithFallback(AzurePersistence.DefaultConfig), HoconAddMode.Append);
+            }
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+
     }
 
     public static AkkaConfigurationBuilder ConfigureCounterActors(this AkkaConfigurationBuilder builder,
