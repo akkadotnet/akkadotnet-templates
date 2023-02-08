@@ -18,6 +18,7 @@
 
     <ItemGroup>
         <PackageReference Include="Akka.Cluster.Hosting" />
+        <PackageReference Include="Akka.Discovery.Azure" />
         <PackageReference Include="Akka.HealthCheck.Hosting.Web" />
         <PackageReference Include="Akka.Management" />
         <PackageReference Include="Akka.Persistence.Azure.Hosting" />

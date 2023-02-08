@@ -2,6 +2,7 @@
 using Akka.Actor;
 using Akka.Cluster.Hosting;
 using Akka.Cluster.Sharding;
+using Akka.Discovery.Azure;
 using Akka.Hosting;
 using Akka.Management;
 using Akka.Management.Cluster.Bootstrap;
@@ -36,7 +37,7 @@ public static class AkkaConfiguration
     }
 
     public static AkkaConfigurationBuilder ConfigureNetwork(this AkkaConfigurationBuilder builder,
-        AkkaSettings settings)
+        AkkaSettings settings, IConfiguration configuration)
     {
         if (!settings.UseClustering)
             return builder;
@@ -67,7 +68,20 @@ public static class AkkaConfiguration
                 case DiscoveryMethod.AwsEc2TagBased:
                     break;
                 case DiscoveryMethod.AzureTableStorage:
+                {
+                    var connectionStringName = configuration.GetSection("AzureStorageSettings")
+                        .Get<AzureStorageSettings>()?.ConnectionStringName;
+                    Debug.Assert(connectionStringName != null, nameof(connectionStringName) + " != null");
+                    var connectionString = configuration.GetConnectionString(connectionStringName);
+                    
+                    
+                    b = b.WithAzureDiscovery(options =>
+                    {
+                        options.ServiceName = settings.AkkaManagementOptions.ServiceName;
+                        options.ConnectionString = connectionString;
+                    });
                     break;
+                }
                 case DiscoveryMethod.Config:
                     break;
                 default:
