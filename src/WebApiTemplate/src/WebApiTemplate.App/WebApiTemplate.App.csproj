@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <ContainerImageName>webpapitemplate-app</ContainerImageName>
+        <ContainerImageTags>$(VersionPrefix);latest</ContainerImageTags>
     </PropertyGroup>
 
     <ItemGroup>
