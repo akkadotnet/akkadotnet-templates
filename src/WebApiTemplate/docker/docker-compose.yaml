@@ -4,6 +4,10 @@ services:
   azurite:
     image: mcr.microsoft.com/azure-storage/azurite:latest
     hostname: azurite
+    ports:
+      - '10000:10000'
+      - '10001:10001'
+      - '10002:10002'
   pbmhost:
     image: webpapitemplate-app:latest
     hostname: pbm-host
