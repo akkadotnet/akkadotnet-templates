@@ -50,6 +50,8 @@ public class AkkaSettings
 
     public bool UseClustering { get; set; } = true;
 
+    public bool LogConfigOnStart { get; set; } = false;
+
     public RemoteOptions RemoteOptions { get; set; } = new RemoteOptions();
 
     public ClusterOptions ClusterOptions { get; set; } = new ClusterOptions();

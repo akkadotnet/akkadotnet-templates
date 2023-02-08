@@ -2,6 +2,7 @@
 using Akka.Actor;
 using Akka.Cluster.Hosting;
 using Akka.Cluster.Sharding;
+using Akka.Configuration;
 using Akka.Discovery.Azure;
 using Akka.Hosting;
 using Akka.Management;
@@ -32,6 +33,10 @@ public static class AkkaConfiguration
     public static AkkaConfigurationBuilder ConfigureActorSystem(this AkkaConfigurationBuilder builder, AkkaSettings settings, IConfiguration configuration)
     {
         return builder
+            .ConfigureLoggers(configBuilder =>
+            {
+                configBuilder.LogConfigOnStart = settings.LogConfigOnStart;
+            })
             .ConfigureNetwork(settings, configuration)
             .ConfigurePersistence(settings, configuration)
             .ConfigureCounterActors(settings);
@@ -74,8 +79,7 @@ public static class AkkaConfiguration
                         .Get<AzureStorageSettings>()?.ConnectionStringName;
                     Debug.Assert(connectionStringName != null, nameof(connectionStringName) + " != null");
                     var connectionString = configuration.GetConnectionString(connectionStringName);
-                    
-                    
+
                     b = b.WithAzureDiscovery(options =>
                     {
                         options.ServiceName = settings.AkkaManagementOptions.ServiceName;
@@ -96,6 +100,27 @@ public static class AkkaConfiguration
 
         return b;
     }
+    
+    public static Config GetPersistenceHocon(string connectionString)
+    {
+        return $@"
+            akka.persistence {{
+                journal {{
+                    plugin = ""akka.persistence.journal.azure-table""
+                    azure-table {{
+                        class = ""Akka.Persistence.Azure.Journal.AzureTableStorageJournal, Akka.Persistence.Azure""
+                        connection-string = ""{connectionString}""
+                    }}
+                }}
+                 snapshot-store {{
+                     plugin = ""akka.persistence.snapshot-store.azure-blob-store""
+                     azure-blob-store {{
+                        class = ""Akka.Persistence.Azure.Snapshot.AzureBlobSnapshotStore, Akka.Persistence.Azure""
+                        connection-string = ""{connectionString}""
+                    }}
+                }}
+            }}";
+    }
 
     public static AkkaConfigurationBuilder ConfigurePersistence(this AkkaConfigurationBuilder builder,
         AkkaSettings settings, IConfiguration configuration)
@@ -110,8 +135,8 @@ public static class AkkaConfiguration
                     .Get<AzureStorageSettings>()?.ConnectionStringName;
                 Debug.Assert(connectionStringName != null, nameof(connectionStringName) + " != null");
                 var connectionString = configuration.GetConnectionString(connectionStringName);
-
-                return builder.WithAzurePersistence(connectionString);
+                // return builder.WithAzurePersistence(); // doesn't work right now
+                return builder.AddHocon(GetPersistenceHocon(connectionString), HoconAddMode.Append);
             }
             default:
                 throw new ArgumentOutOfRangeException();
