@@ -6,6 +6,7 @@ using Akka.Discovery.Azure;
 using Akka.Hosting;
 using Akka.Management;
 using Akka.Management.Cluster.Bootstrap;
+using Akka.Persistence.Azure.Hosting;
 using Akka.Persistence.Hosting;
 using Akka.Remote.Hosting;
 using Akka.Util;
@@ -23,16 +24,16 @@ public static class AkkaConfiguration
         
         return services.AddAkka(akkaSettings.ActorSystemName, (builder, sp) =>
         {
-            builder.ConfigureActorSystem(akkaSettings);
+            builder.ConfigureActorSystem(akkaSettings, configuration);
             additionalConfig(builder, sp);
         });
     }
 
-    public static AkkaConfigurationBuilder ConfigureActorSystem(this AkkaConfigurationBuilder builder, AkkaSettings settings)
+    public static AkkaConfigurationBuilder ConfigureActorSystem(this AkkaConfigurationBuilder builder, AkkaSettings settings, IConfiguration configuration)
     {
         return builder
-            .ConfigureNetwork(settings)
-            .ConfigurePersistence(settings)
+            .ConfigureNetwork(settings, configuration)
+            .ConfigurePersistence(settings, configuration)
             .ConfigureCounterActors(settings);
     }
 
@@ -97,9 +98,26 @@ public static class AkkaConfiguration
     }
 
     public static AkkaConfigurationBuilder ConfigurePersistence(this AkkaConfigurationBuilder builder,
-        AkkaSettings settings)
+        AkkaSettings settings, IConfiguration configuration)
     {
-        return builder.WithInMemoryJournal().WithInMemorySnapshotStore();
+        switch (settings.PersistenceMode)
+        {
+            case PersistenceMode.InMemory:
+                return builder.WithInMemoryJournal().WithInMemorySnapshotStore();
+            case PersistenceMode.Azure:
+            {
+                var connectionStringName = configuration.GetSection("AzureStorageSettings")
+                    .Get<AzureStorageSettings>()?.ConnectionStringName;
+                Debug.Assert(connectionStringName != null, nameof(connectionStringName) + " != null");
+                var connectionString = configuration.GetConnectionString(connectionStringName);
+
+                return builder.WithAzurePersistence(connectionString);
+            }
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+
     }
 
     public static AkkaConfigurationBuilder ConfigureCounterActors(this AkkaConfigurationBuilder builder,
