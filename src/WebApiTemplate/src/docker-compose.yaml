@@ -1,38 +1,32 @@
 version: '3'
 
 services:
-  webcrawler.web:
-    image: webcrawler.web:latest
-    hostname: webcrawler.web
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:latest
+    hostname: azurite
+  pbmhost:
+    image: webpapitemplate-app:latest
+    hostname: pbm-host
     ports:
       - '9110:9110'
-      - '4055:4055'
       - '8080:80'
+      - '8079:443'
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      CLUSTER__IP: "webcrawler.web"
-      CLUSTER__PORT: 4055
-      CLUSTER__SEEDS__0: "akka.tcp://webcrawler@webcrawler.web:4055"
-      CLUSTER__STARTUPMETHOD: "SeedNodes"
+      ASPNETCORE_ENVIRONMENT: Azure
+      ConnectionStrings__Azurite: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;TableEndpoint=http://azurite:10002/devstoreaccount1;"
+      AkkaSettings__AkkaManagementOptions__Port: "8558"
+      AkkaSettings__RemoteOptions__Port: "8557"
+    depends_on:
+      - "azurite"
 
-  webcrawler.crawlservice:
-    image: webcrawler.crawlservice:latest
+  hosts:
+    image: webpapitemplate-app:latest
     deploy:
       replicas: 3
     environment:
-      CLUSTER__SEEDS__0: "akka.tcp://webcrawler@webcrawler.web:4055"
-      CLUSTER__PORT: 4055
-      CLUSTER__STARTUPMETHOD: "SeedNodes"
+      ASPNETCORE_ENVIRONMENT: Azure
+      ConnectionStrings__Azurite: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;QueueEndpoint=http://azurite:10001/devstoreaccount1;TableEndpoint=http://azurite:10002/devstoreaccount1;"
+      AkkaSettings__AkkaManagementOptions__Port: "8558"
+      AkkaSettings__RemoteOptions__Port: "8557"
     depends_on:
-      - "webcrawler.web"
-
-  webcrawler.trackerservice:
-    image: webcrawler.trackerservice:latest
-    deploy:
-      replicas: 3
-    environment:
-      CLUSTER__SEEDS__0: "akka.tcp://webcrawler@webcrawler.web:4055"
-      CLUSTER__PORT: 4055
-      CLUSTER__STARTUPMETHOD: "SeedNodes"
-    depends_on:
-      - "webcrawler.web"
+      - "azurite"

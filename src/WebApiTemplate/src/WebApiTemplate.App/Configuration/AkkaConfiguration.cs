@@ -7,6 +7,7 @@ using Akka.Discovery.Azure;
 using Akka.Hosting;
 using Akka.Management;
 using Akka.Management.Cluster.Bootstrap;
+using Akka.Persistence.Azure;
 using Akka.Persistence.Azure.Hosting;
 using Akka.Persistence.Hosting;
 using Akka.Remote.Hosting;
@@ -47,7 +48,7 @@ public static class AkkaConfiguration
     {
         if (!settings.UseClustering)
             return builder;
-        
+
         var b = builder
             .WithRemoting(settings.RemoteOptions);
 
@@ -136,7 +137,8 @@ public static class AkkaConfiguration
                 Debug.Assert(connectionStringName != null, nameof(connectionStringName) + " != null");
                 var connectionString = configuration.GetConnectionString(connectionStringName);
                 // return builder.WithAzurePersistence(); // doesn't work right now
-                return builder.AddHocon(GetPersistenceHocon(connectionString), HoconAddMode.Append);
+                return builder.AddHocon(GetPersistenceHocon(connectionString).
+                    WithFallback(AzurePersistence.DefaultConfig), HoconAddMode.Append);
             }
             default:
                 throw new ArgumentOutOfRangeException();
