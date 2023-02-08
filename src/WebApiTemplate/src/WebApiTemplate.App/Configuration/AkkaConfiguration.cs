@@ -23,29 +23,35 @@ public static class AkkaConfiguration
     {
         var akkaSettings = configuration.GetRequiredSection("AkkaSettings").Get<AkkaSettings>();
         Debug.Assert(akkaSettings != null, nameof(akkaSettings) + " != null");
+
+        services.AddSingleton(akkaSettings);
         
         return services.AddAkka(akkaSettings.ActorSystemName, (builder, sp) =>
         {
-            builder.ConfigureActorSystem(akkaSettings, configuration);
+            builder.ConfigureActorSystem(sp);
             additionalConfig(builder, sp);
         });
     }
 
-    public static AkkaConfigurationBuilder ConfigureActorSystem(this AkkaConfigurationBuilder builder, AkkaSettings settings, IConfiguration configuration)
+    public static AkkaConfigurationBuilder ConfigureActorSystem(this AkkaConfigurationBuilder builder, IServiceProvider sp)
     {
+        var settings = sp.GetRequiredService<AkkaSettings>();
+
         return builder
             .ConfigureLoggers(configBuilder =>
             {
                 configBuilder.LogConfigOnStart = settings.LogConfigOnStart;
             })
-            .ConfigureNetwork(settings, configuration)
-            .ConfigurePersistence(settings, configuration)
-            .ConfigureCounterActors(settings);
+            .ConfigureNetwork(sp)
+            .ConfigurePersistence(sp)
+            .ConfigureCounterActors(sp);
     }
 
-    public static AkkaConfigurationBuilder ConfigureNetwork(this AkkaConfigurationBuilder builder,
-        AkkaSettings settings, IConfiguration configuration)
+    public static AkkaConfigurationBuilder ConfigureNetwork(this AkkaConfigurationBuilder builder, IServiceProvider serviceProvider)
     {
+        var settings = serviceProvider.GetRequiredService<AkkaSettings>();
+        var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+        
         if (!settings.UseClustering)
             return builder;
 
@@ -124,8 +130,11 @@ public static class AkkaConfiguration
     }
 
     public static AkkaConfigurationBuilder ConfigurePersistence(this AkkaConfigurationBuilder builder,
-        AkkaSettings settings, IConfiguration configuration)
+        IServiceProvider serviceProvider)
     {
+        var settings = serviceProvider.GetRequiredService<AkkaSettings>();
+        var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+        
         switch (settings.PersistenceMode)
         {
             case PersistenceMode.InMemory:
@@ -148,8 +157,9 @@ public static class AkkaConfiguration
     }
 
     public static AkkaConfigurationBuilder ConfigureCounterActors(this AkkaConfigurationBuilder builder,
-        AkkaSettings settings)
+        IServiceProvider serviceProvider)
     {
+        var settings = serviceProvider.GetRequiredService<AkkaSettings>();
         var extractor = CreateCounterMessageRouter();
 
         if (settings.UseClustering)
