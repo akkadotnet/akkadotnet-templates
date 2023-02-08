@@ -19,13 +19,14 @@ namespace WebApiTemplate.App.Configuration;
 
 public static class AkkaConfiguration
 {
-    public static IServiceCollection ConfigureWebApiAkka(this IServiceCollection services, IConfiguration configuration, Action<AkkaConfigurationBuilder, IServiceProvider> additionalConfig)
+    public static IServiceCollection ConfigureWebApiAkka(this IServiceCollection services, IConfiguration configuration,
+        Action<AkkaConfigurationBuilder, IServiceProvider> additionalConfig)
     {
         var akkaSettings = configuration.GetRequiredSection("AkkaSettings").Get<AkkaSettings>();
         Debug.Assert(akkaSettings != null, nameof(akkaSettings) + " != null");
 
         services.AddSingleton(akkaSettings);
-        
+
         return services.AddAkka(akkaSettings.ActorSystemName, (builder, sp) =>
         {
             builder.ConfigureActorSystem(sp);
@@ -33,7 +34,8 @@ public static class AkkaConfiguration
         });
     }
 
-    public static AkkaConfigurationBuilder ConfigureActorSystem(this AkkaConfigurationBuilder builder, IServiceProvider sp)
+    public static AkkaConfigurationBuilder ConfigureActorSystem(this AkkaConfigurationBuilder builder,
+        IServiceProvider sp)
     {
         var settings = sp.GetRequiredService<AkkaSettings>();
 
@@ -41,17 +43,19 @@ public static class AkkaConfiguration
             .ConfigureLoggers(configBuilder =>
             {
                 configBuilder.LogConfigOnStart = settings.LogConfigOnStart;
+                configBuilder.AddLoggerFactory();
             })
             .ConfigureNetwork(sp)
             .ConfigurePersistence(sp)
             .ConfigureCounterActors(sp);
     }
 
-    public static AkkaConfigurationBuilder ConfigureNetwork(this AkkaConfigurationBuilder builder, IServiceProvider serviceProvider)
+    public static AkkaConfigurationBuilder ConfigureNetwork(this AkkaConfigurationBuilder builder,
+        IServiceProvider serviceProvider)
     {
         var settings = serviceProvider.GetRequiredService<AkkaSettings>();
         var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-        
+
         if (!settings.UseClustering)
             return builder;
 
@@ -107,7 +111,7 @@ public static class AkkaConfiguration
 
         return b;
     }
-    
+
     public static Config GetPersistenceHocon(string connectionString)
     {
         return $@"
@@ -134,7 +138,7 @@ public static class AkkaConfiguration
     {
         var settings = serviceProvider.GetRequiredService<AkkaSettings>();
         var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-        
+
         switch (settings.PersistenceMode)
         {
             case PersistenceMode.InMemory:
@@ -145,15 +149,16 @@ public static class AkkaConfiguration
                     .Get<AzureStorageSettings>()?.ConnectionStringName;
                 Debug.Assert(connectionStringName != null, nameof(connectionStringName) + " != null");
                 var connectionString = configuration.GetConnectionString(connectionStringName);
+                Debug.Assert(connectionString != null, nameof(connectionString) + " != null");
+
                 // return builder.WithAzurePersistence(); // doesn't work right now
-                return builder.AddHocon(GetPersistenceHocon(connectionString).
-                    WithFallback(AzurePersistence.DefaultConfig), HoconAddMode.Append);
+                return builder.AddHocon(
+                    GetPersistenceHocon(connectionString).WithFallback(AzurePersistence.DefaultConfig),
+                    HoconAddMode.Append);
             }
             default:
                 throw new ArgumentOutOfRangeException();
         }
-        
-
     }
 
     public static AkkaConfigurationBuilder ConfigureCounterActors(this AkkaConfigurationBuilder builder,
@@ -172,7 +177,10 @@ public static class AkkaConfiguration
         {
             return builder.WithActors((system, registry, resolver) =>
             {
-                var parent = system.ActorOf(GenericChildPerEntityParent.Props(extractor, s => Props.Create(() => new CounterActor(s))), "counters");
+                var parent =
+                    system.ActorOf(
+                        GenericChildPerEntityParent.Props(extractor, s => Props.Create(() => new CounterActor(s))),
+                        "counters");
                 registry.Register<CounterActor>(parent);
             });
         }
