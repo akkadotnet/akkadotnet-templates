@@ -33,6 +33,17 @@ public enum DiscoveryMethod
     AzureTableStorage
 }
 
+public enum PersistenceMode
+{
+    InMemory,
+    Azure
+}
+
+public class AzureStorageSettings
+{
+    public string ConnectionStringName { get; set; } = "Azurite";
+}
+
 public class AkkaSettings
 {
     public string ActorSystemName { get; set; }= "AkkaWeb";
@@ -45,5 +56,7 @@ public class AkkaSettings
 
     public ShardOptions ShardOptions { get; set; } = new ShardOptions();
     
+    public PersistenceMode PersistenceMode { get; set; } = PersistenceMode.InMemory;
+
     public AkkaManagementOptions? AkkaManagementOptions { get; set; }
 }

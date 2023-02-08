@@ -20,6 +20,7 @@
         <PackageReference Include="Akka.Cluster.Hosting" />
         <PackageReference Include="Akka.HealthCheck.Hosting.Web" />
         <PackageReference Include="Akka.Management" />
+        <PackageReference Include="Akka.Persistence.Azure.Hosting" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
         <PackageReference Include="Microsoft.NET.Build.Containers" />
         <PackageReference Include="Petabridge.Cmd.Cluster" />
