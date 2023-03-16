@@ -1,6 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/template",
-  "author": ".NET Boxed",
+  "author": "Akka",
   "classifications": ["Akka.NET", "Web API","Cloud", "Service", "Web"],
   "name": "Akka.NET + ASP.NET Core HTTP API",
   "description": "An out-of-the-box solution for creating an ASP.NET API integrated with Akka.NET.",

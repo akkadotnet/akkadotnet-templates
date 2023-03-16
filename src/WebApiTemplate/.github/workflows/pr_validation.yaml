@@ -14,7 +14,7 @@ on:
 
 jobs:
   test:
-    name: Test-${{matrix.template}}-${{matrix.os}}
+    name: Test-${{matrix.os}}
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
