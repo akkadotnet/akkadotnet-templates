@@ -1,20 +1,20 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Akka",
-  "classifications": ["Akka.NET", "Web API","Cloud", "Service", "Web"],
-  "name": "Akka.NET Console Application",
-  "description": "A simple console application that uses Akka.NET and Akka.Hosting.",
-  "groupIdentity": "Akka.Console",
-  "identity": "Akka.Console.CSharp",
-  "shortName": "akkaconsole",
-  "defaultName": "AkkaConsole1",
+  "classifications": ["Akka.NET", "Akka.Streams", "Streaming"],
+  "name": "Akka.Streams Console Application",
+  "description": "A simple console application that uses Akka.Streams and Akka.Hosting to asynchonrously process data.",
+  "groupIdentity": "Akka.Streams",
+  "identity": "Akka.Streams.CSharp",
+  "shortName": "akkastreams",
+  "defaultName": "AkkaStreams1",
   "tags": {
     "language": "C#",
     "type": "solution"
   },
-  "sourceName": "AkkaConsoleTemplate",
+  "sourceName": "AkkaStreamsTemplate",
   "preferNameDirectory": true,
-  "primaryOutputs": [{ "path": "AkkaConsoleTemplate.sln" }],
+  "primaryOutputs": [{ "path": "AkkaStreamsTemplate.sln" }],
   "sources": [
     {
       

@@ -33,9 +33,11 @@ dotnet new -u Akka.Templates
 
 The following templates are available as part of the `Akka.Templates` package:
 
-| Template    | Short Name | Description                                                                                                                                                                                                                                                              |
-|-------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Akka.WebApi](https://github.com/akkadotnet/akkadotnet-templates/blob/dev/docs/WebApiTemplate.md) | akkawebapi | A template for building ASP.NET HTTP APIs on top of an Akka.NET Cluster. Uses Akka.Cluster.Sharding and, optionally: Akka.Management + Akka.Persistence.Azure + Akka.Azure.Discovery. This template is meant as a starter for building distributed systems with Akka.NET |
+| Template     | Short Name  | Description                                                                                                                                                                                                                                                              |
+|--------------|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Akka.WebApi  | akkawebapi  | A template for building ASP.NET HTTP APIs on top of an Akka.NET Cluster. Uses Akka.Cluster.Sharding and, optionally: Akka.Management + Akka.Persistence.Azure + Akka.Azure.Discovery. This template is meant as a starter for building distributed systems with Akka.NET |
+| Akka.Console | akkaconsole | This is a simple template designed to incorporate local [Akka.NET](https://getakka.net/) into a console application.                                                                                                                                                     |
+| Akka.Streams | akkastreams | This is a simple template designed to incorporate [Akka.NET](https://getakka.net/)'s [Akka.Streams APIs](https://getakka.net/articles/streams/introduction.html) into a local console template.                                                                          |
 
 See [the official `dotnet new` documentation](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new) for more information on the sorts of options that are available when using project templates.
 
