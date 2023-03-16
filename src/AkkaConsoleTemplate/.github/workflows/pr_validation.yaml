@@ -35,21 +35,3 @@ jobs:
         run: dotnet build -c Release
       - name: "dotnet test"
         run: dotnet test -c Release
-
-  docker:
-    name: Docker
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout"
-        uses: actions/checkout@v3.0.2
-        with:
-          lfs: true
-          fetch-depth: 0
-      - name: "Install .NET SDK"
-        uses: actions/setup-dotnet@v2.1.0
-        with:
-          dotnet-version: |
-            7.0.x
-          global-json-file: "./global.json"
-      - name: "dotnet docker"
-        run: dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer
