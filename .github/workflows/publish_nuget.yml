@@ -25,7 +25,7 @@ jobs:
       run:  dotnet pack /p:PackageVersion=${{ github.ref_name }} -c Release -o ./output
 
     - name: Push Packages
-      run: dotnet nuget push ".output/*.nupkg" -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push "output/*.nupkg" -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
 
     - name: release
       uses: actions/create-release@v1
