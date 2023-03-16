@@ -6,7 +6,7 @@ Production-ready `dotnet new` templates for [Akka.NET](https://getakka.net/).
 
 All of these templates are designed to be simple and provide you with a relatively complete structure to get started developing your own Akka.NET applications from scratch.
 
-**Upon installing these templates via the `dotnet` CLI, you will have access to them from both the `dotnet` CLI itself and any .NET IDE - such as Visual Studio and JetBrains Rider!**
+**Upon installing these templates via the `dotnet` CLI, you will have access to them from both the `dotnet` CLI itself and as "new project" template options in any .NET IDE - such as Visual Studio and JetBrains Rider!**
 
 ## Installation
 
