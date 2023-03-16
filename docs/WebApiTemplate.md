@@ -121,3 +121,38 @@ You can set the `ASPNET_ENVIRONMEN` enviroment variable in any number of ways, b
 ```shell
 dotnet run --launch-profile "AzureDiscoveryAndStorage"
 ```
+
+## Docker
+
+By default, if you run the following `dotnet` CLI instruction you will produce a Docker image of your application:
+
+```shell
+dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer
+```
+
+This will use the [.NET SDk's built-in container support](https://devblogs.microsoft.com/dotnet/announcing-builtin-container-support-for-the-dotnet-sdk/) to automatically produce a Linux image of your application using the same .NET version as your application.
+
+Upon running the command you will see a Docker image added to your local registry that looks like the following:
+
+```shell
+λ  dotnet publish --os linux --arch x64 -c Release -p:PublishProfile=DefaultContainer
+MSBuild version 17.4.0+18d5aef85 for .NET
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  WebApiTemplate.Domain -> E:\Repositories\olympus\akkadotnet-templates\src\WebApiTemplate\src\WebApiTemplate.Domain\bi
+  n\Release\net7.0\WebApiTemplate.Domain.dll
+  WebApiTemplate.App -> E:\Repositories\olympus\akkadotnet-templates\src\WebApiTemplate\src\WebApiTemplate.App\bin\Rele
+  ase\net7.0\linux-x64\WebApiTemplate.App.dll
+  WebApiTemplate.App -> E:\Repositories\olympus\akkadotnet-templates\src\WebApiTemplate\src\WebApiTemplate.App\bin\Rele
+  ase\net7.0\linux-x64\publish\
+  Building image 'webpapitemplate-app' with tags 1.0.0,latest on top of base image mcr.microsoft.com/dotnet/aspnet:7.0
+  Pushed container 'webpapitemplate-app:1.0.0' to Docker daemon
+  Pushed container 'webpapitemplate-app:latest' to Docker daemon
+```
+
+The Docker image will take the following forms:
+
+* `{APPNAME}:{VersionPrefix}` - the name you gave this app when you ran `dotnet new` plus the current `VersionPrefix` and
+* `{APPNAME}:latest` - the name you gave this app when you ran `dotnet new` plus the `latest` tag.
+
+> You can launch a multi-node cluster by updating the [`docker-compose.yml`](https://github.com/akkadotnet/akkadotnet-templates/blob/dev/src/WebApiTemplate/docker/docker-compose.yaml) file to use your specific image name.
