@@ -8,19 +8,28 @@
     <Authors>AkkaDotNet</Authors>
     <Description>Templates to use when creating new Akka.NET applications.</Description>
     <PackageTags>dotnet-new;templates;akkadotnet;akka;</PackageTags>
-
     <TargetFramework>netstandard2.0</TargetFramework>
-
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
     <NoWarn>$(NoWarn);NU5128</NoWarn>
     <NoDefaultExcludes>true</NoDefaultExcludes>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/akkadotnet/akkadotnet-templates</PackageProjectUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageLicenseUrl>https://github.com/akkadotnet/akkadotnet-templates/blob/dev/LICENSE</PackageLicenseUrl>
+    <NoWarn>$(NoWarn);CS1591;xUnit1013</NoWarn>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="src\**\*" Exclude="src\**\bin\**;src\**\obj\**" />
     <Compile Remove="**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)\logo.png" Pack="true" Visible="false" PackagePath="\" />
+    <None Include="$(MSBuildThisFileDirectory)\README.md" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
 
 </Project>
