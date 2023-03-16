@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Akka",
+  "classifications": ["Akka.NET", "Web API","Cloud", "Service", "Web"],
+  "name": "Akka.NET Console Application",
+  "description": "A simple console application that uses Akka.NET and Akka.Hosting.",
+  "groupIdentity": "Akka.Console",
+  "identity": "Akka.Console.CSharp",
+  "shortName": "akkaconsole",
+  "defaultName": "AkkaConsole1",
+  "tags": {
+    "language": "C#",
+    "type": "solution"
+  },
+  "sourceName": "AkkaConsoleTemplate",
+  "preferNameDirectory": true,
+  "primaryOutputs": [{ "path": "AkkaConsoleTemplate.sln" }],
+  "sources": [
+    {
+      
+    }
+  ],
+  "symbols": {
+
+   },
+}
