@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json.schemastore.org/vs-2017.3.host",
+  "defaultSymbolVisibility": true,
+  "icon": "icon.png",
+  "learnMoreLink": "https://github.com/akkadotnet/akkadotnet-templates/blob/dev/docs/ConsoleTemplate.md",
+  "order": 0,
+  "symbolInfo": [
+  ]
+}
