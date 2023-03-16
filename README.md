@@ -1,6 +1,6 @@
 # akkadotnet-templates
 
-![Akka.NET logo](icon.png)
+![Akka.NET logo](https://raw.githubusercontent.com/akkadotnet/akkadotnet-templates/dev/logo.png)
 
 Production-ready `dotnet new` templates for [Akka.NET](https://getakka.net/).
 
