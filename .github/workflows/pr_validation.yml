@@ -11,6 +11,23 @@ on:
       - dev
 
 jobs:
+  build-templates:
+    name: BuildTemplate
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3.0.2
+        with:
+          lfs: true
+          fetch-depth: 0
+      - name: "Install .NET SDK"
+        uses: actions/setup-dotnet@v2.1.0
+        with:
+          dotnet-version: |
+            7.0.x
+          global-json-file: "./global.json"
+      - name: "dotnet pack"
+        run: dotnet pack -c Release
   test:
     name: Test-${{matrix.template}}-${{matrix.os}}
     runs-on: ${{matrix.os}}
