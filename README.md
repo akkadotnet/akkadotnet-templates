@@ -26,7 +26,7 @@ To uninstall these templates from your local machine:
 
 
 ```shell
-dotnet new -u Akka.Templates
+dotnet new uninstall Akka.Templates
 ```
 
 ## Available Templates
