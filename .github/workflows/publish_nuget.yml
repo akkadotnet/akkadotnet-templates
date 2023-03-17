@@ -33,7 +33,7 @@ jobs:
       with:
         draft: false
         prerelease: false
-        release_name: 'Akka.Templates ${{ steps.version.outputs.version }}'
+        release_name: 'Akka.Templates ${{ github.ref_name }}'
         tag_name: ${{ github.ref }}
         body_path: RELEASE_NOTES.md
       env:
@@ -43,5 +43,5 @@ jobs:
       uses: AButler/upload-release-assets@v2.0
       with:
           repo-token: ${{ github.token }}
-          release-tag: ${{ github.ref }}
+          release-tag: ${{ github.ref_name }}
           files: 'output/*.nupkg'
