@@ -13,7 +13,7 @@ All of these templates are designed to be simple and provide you with a relative
 To install these templates, just install the `Akka.Templates` package from NuGet:
 
 ```shell
-dotnet new -i "Akka.Templates::*"
+dotnet new install "Akka.Templates::*"
 ```
 
 To upgrade these templates to a newer version:
