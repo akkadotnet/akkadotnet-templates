@@ -21,7 +21,7 @@ jobs:
           lfs: true
           fetch-depth: 0
       - name: "Install .NET SDK"
-        uses: actions/setup-dotnet@v2.1.0
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: |
             7.0.x
@@ -42,7 +42,7 @@ jobs:
           lfs: true
           fetch-depth: 0
       - name: "Install .NET SDK"
-        uses: actions/setup-dotnet@v2.1.0
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: |
             7.0.x
@@ -67,7 +67,7 @@ jobs:
           lfs: true
           fetch-depth: 0
       - name: "Install .NET SDK"
-        uses: actions/setup-dotnet@v2.1.0
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: |
             7.0.x
