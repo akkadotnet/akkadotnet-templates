@@ -7,6 +7,24 @@ updates:
     interval: daily
     time: "11:00"
 
+- package-ecosystem: github-actions
+  directory: "/src/AkkaConsoleTemplate"
+  schedule:
+    interval: daily
+    time: "11:00"
+
+- package-ecosystem: github-actions
+  directory: "/src/AkkaStreamsTemplate"
+  schedule:
+    interval: daily
+    time: "11:00"
+
+- package-ecosystem: github-actions
+  directory: "/src/WebApiTemplate"
+  schedule:
+    interval: daily
+    time: "11:00"
+
 - package-ecosystem: nuget
   directory: "/src/AkkaConsoleTemplate"
   schedule:
