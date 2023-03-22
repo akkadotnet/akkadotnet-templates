@@ -1,8 +1,26 @@
 version: 2
+
 updates:
-- package-ecosystem: nuget
+- package-ecosystem: github-actions
   directory: "/"
   schedule:
     interval: daily
     time: "11:00"
-  open-pull-requests-limit: 10
+
+- package-ecosystem: nuget
+  directory: "/src/AkkaConsoleTemplate"
+  schedule:
+    interval: daily
+    time: "11:00"
+
+- package-ecosystem: nuget
+  directory: "/src/AkkaStreamsTemplate"
+  schedule:
+    interval: daily
+    time: "11:00"
+
+- package-ecosystem: nuget
+  directory: "/src/WebApiTemplate"
+  schedule:
+    interval: daily
+    time: "11:00"
