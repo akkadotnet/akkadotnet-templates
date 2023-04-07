@@ -1,3 +1,3 @@
-## [0.1.1] / 16 March 2023
+## [0.1.2] / 07 April 2023
 
-* Fixed issues with `README.md`
+* Upgraded to Akka.NET v1.5.2
