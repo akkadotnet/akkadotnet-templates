@@ -9,6 +9,9 @@ on:
     branches:
       - master
       - dev
+  merge_group:
+    branches:
+      - gh-readonly-queue/**
 
 jobs:
   build-templates:
