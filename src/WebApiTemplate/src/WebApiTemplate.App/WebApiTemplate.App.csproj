@@ -32,12 +32,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\WebApiTemplate.Domain\WebApiTemplate.Domain.csproj" />
     </ItemGroup>
 
