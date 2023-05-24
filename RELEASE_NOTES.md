@@ -1,4 +1,4 @@
-## [0.1.3] / 11 May 2023
+## [0.1.4] / 24 May 2023
 
 * Upgraded to [Akka.NET v1.5.6](https://github.com/akkadotnet/akka.net/releases/tag/1.5.7)
 * Upgraded to [Akka.Hosting v1.5.6](https://github.com/akkadotnet/Akka.Hosting/releases/tag/1.5.7)
