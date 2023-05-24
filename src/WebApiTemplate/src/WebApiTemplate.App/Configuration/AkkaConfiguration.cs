@@ -4,6 +4,7 @@ using Akka.Cluster.Hosting;
 using Akka.Cluster.Sharding;
 using Akka.Configuration;
 using Akka.Discovery.Azure;
+using Akka.Discovery.Config.Hosting;
 using Akka.Hosting;
 using Akka.Management;
 using Akka.Management.Cluster.Bootstrap;
@@ -99,7 +100,21 @@ public static class AkkaConfiguration
                     break;
                 }
                 case DiscoveryMethod.Config:
+                {
+                    b = b
+                        .WithConfigDiscovery(options =>
+                        {
+                            options.Services.Add(new Service
+                            {
+                                Name = settings.AkkaManagementOptions.ServiceName,
+                                Endpoints = new[]
+                                {
+                                    $"{settings.AkkaManagementOptions.Hostname}:{settings.AkkaManagementOptions.Port}",
+                                }
+                            });
+                        });
                     break;
+                }
                 default:
                     throw new ArgumentOutOfRangeException();
             }

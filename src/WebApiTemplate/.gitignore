@@ -2,7 +2,6 @@
 tools/
 .nuget/
 .dotnet/
-.idea/
 .[Dd][Ss]_[Ss]tore
 
 ## NBench output
