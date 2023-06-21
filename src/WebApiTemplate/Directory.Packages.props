@@ -5,7 +5,7 @@
 
   <!-- Akka.NET Package Versions -->
   <ItemGroup>
-    <PackageVersion Include="Akka" Version="1.5.7" />
+    <PackageVersion Include="Akka" Version="1.5.8" />
     <PackageVersion Include="Akka.Cluster.Hosting" Version="1.5.7" />
     <PackageVersion Include="Akka.Discovery.Azure" Version="1.5.7" />
     <PackageVersion Include="Akka.HealthCheck.Hosting.Web" Version="1.5.2" />
