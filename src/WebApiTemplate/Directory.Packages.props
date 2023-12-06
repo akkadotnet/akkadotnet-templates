@@ -11,7 +11,7 @@
     <PackageVersion Include="Akka.HealthCheck.Hosting.Web" Version="1.5.12" />
     <PackageVersion Include="Akka.Management" Version="1.5.7" />
     <PackageVersion Include="Akka.Persistence.Azure.Hosting" Version="1.5.1" />
-    <PackageVersion Include="Microsoft.NET.Build.Containers" Version="7.0.402" />
+    <PackageVersion Include="Microsoft.NET.Build.Containers" Version="7.0.404" />
     <PackageVersion Include="Petabridge.Cmd.Cluster.Sharding" Version="$(PbmVersion)" />
     <PackageVersion Include="Petabridge.Cmd.Cluster" Version="$(PbmVersion)" />
     <PackageVersion Include="Petabridge.Cmd.Remote" Version="$(PbmVersion)" />
