@@ -6,6 +6,6 @@
   <!-- Akka.NET Package Versions -->
   <ItemGroup>
     <PackageVersion Include="Akka.Hosting" Version="1.5.13" />
-    <PackageVersion Include="Akka.Streams" Version="1.5.14" />
+    <PackageVersion Include="Akka.Streams" Version="1.5.15" />
   </ItemGroup>
 </Project>
