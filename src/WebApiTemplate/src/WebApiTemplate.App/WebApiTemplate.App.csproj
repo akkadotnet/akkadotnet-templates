@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <ContainerImageName>webpapitemplate-app</ContainerImageName>
+        <ContainerRepository>webpapitemplate-app</ContainerRepository>
         <ContainerImageTags>$(VersionPrefix);latest</ContainerImageTags>
     </PropertyGroup>
 
@@ -24,7 +24,6 @@
         <PackageReference Include="Akka.Management" />
         <PackageReference Include="Akka.Persistence.Azure.Hosting" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-        <PackageReference Include="Microsoft.NET.Build.Containers" />
         <PackageReference Include="Petabridge.Cmd.Cluster" />
         <PackageReference Include="Petabridge.Cmd.Cluster.Sharding" />
         <PackageReference Include="Petabridge.Cmd.Remote" />
