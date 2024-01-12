@@ -208,8 +208,7 @@ public static class AkkaConfiguration
             return o switch
             {
                 IWithCounterId counterId => counterId.CounterId,
-                ShardRegion.StartEntity startEntity => startEntity.EntityId,
-                _ => string.Empty
+                _ => null
             };
         }, o => o);
         return extractor;
