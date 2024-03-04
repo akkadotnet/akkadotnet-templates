@@ -6,12 +6,12 @@
   <!-- Akka.NET Package Versions -->
   <ItemGroup>
     <PackageVersion Include="Akka" Version="1.5.17.1" />
-    <PackageVersion Include="Akka.Cluster.Hosting" Version="1.5.16" />
-    <PackageVersion Include="Akka.Discovery.Azure" Version="1.5.15" />
-    <PackageVersion Include="Akka.HealthCheck.Hosting.Web" Version="1.5.16" />
-    <PackageVersion Include="Akka.Management" Version="1.5.15" />
-    <PackageVersion Include="Akka.Persistence.Azure.Hosting" Version="1.5.13" />
-    <PackageVersion Include="Microsoft.NET.Build.Containers" Version="7.0.405" />
+    <PackageVersion Include="Akka.Cluster.Hosting" Version="1.5.17.1" />
+    <PackageVersion Include="Akka.Discovery.Azure" Version="1.5.17.1" />
+    <PackageVersion Include="Akka.HealthCheck.Hosting.Web" Version="1.5.17.1" />
+    <PackageVersion Include="Akka.Management" Version="1.5.17.1" />
+    <PackageVersion Include="Akka.Persistence.Azure.Hosting" Version="1.5.17.1" />
+    <PackageVersion Include="Microsoft.NET.Build.Containers" Version="8.0.200" />
     <PackageVersion Include="Petabridge.Cmd.Cluster.Sharding" Version="$(PbmVersion)" />
     <PackageVersion Include="Petabridge.Cmd.Cluster" Version="$(PbmVersion)" />
     <PackageVersion Include="Petabridge.Cmd.Remote" Version="$(PbmVersion)" />
@@ -31,6 +31,6 @@
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.7" />
     <PackageVersion Include="FluentAssertions" Version="6.12.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.1" />
-    <PackageVersion Include="Akka.Hosting.TestKit" Version="1.5.15" />
+    <PackageVersion Include="Akka.Hosting.TestKit" Version="1.5.17.1" />
   </ItemGroup>
 </Project>
