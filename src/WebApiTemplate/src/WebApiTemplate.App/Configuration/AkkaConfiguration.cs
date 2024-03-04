@@ -60,7 +60,7 @@ public static class AkkaConfiguration
         if (!settings.UseClustering)
             return builder;
 
-        var b = builder
+        builder
             .WithRemoting(settings.RemoteOptions);
 
         if (settings.AkkaManagementOptions is { Enabled: true })
@@ -69,7 +69,7 @@ public static class AkkaConfiguration
             var clusterOptions = settings.ClusterOptions;
             clusterOptions.SeedNodes = Array.Empty<string>();
 
-            b = b
+            builder
                 .WithClustering(clusterOptions)
                 .WithAkkaManagement(hostName: settings.AkkaManagementOptions.Hostname,
                     settings.AkkaManagementOptions.Port)
@@ -92,7 +92,7 @@ public static class AkkaConfiguration
                     Debug.Assert(connectionStringName != null, nameof(connectionStringName) + " != null");
                     var connectionString = configuration.GetConnectionString(connectionStringName);
 
-                    b = b.WithAzureDiscovery(options =>
+                    builder.WithAzureDiscovery(options =>
                     {
                         options.ServiceName = settings.AkkaManagementOptions.ServiceName;
                         options.ConnectionString = connectionString;
@@ -101,7 +101,7 @@ public static class AkkaConfiguration
                 }
                 case DiscoveryMethod.Config:
                 {
-                    b = b
+                    builder
                         .WithConfigDiscovery(options =>
                         {
                             options.Services.Add(new Service
@@ -121,31 +121,10 @@ public static class AkkaConfiguration
         }
         else
         {
-            b = b.WithClustering(settings.ClusterOptions);
+            builder.WithClustering(settings.ClusterOptions);
         }
 
-        return b;
-    }
-
-    public static Config GetPersistenceHocon(string connectionString)
-    {
-        return $@"
-            akka.persistence {{
-                journal {{
-                    plugin = ""akka.persistence.journal.azure-table""
-                    azure-table {{
-                        class = ""Akka.Persistence.Azure.Journal.AzureTableStorageJournal, Akka.Persistence.Azure""
-                        connection-string = ""{connectionString}""
-                    }}
-                }}
-                 snapshot-store {{
-                     plugin = ""akka.persistence.snapshot-store.azure-blob-store""
-                     azure-blob-store {{
-                        class = ""Akka.Persistence.Azure.Snapshot.AzureBlobSnapshotStore, Akka.Persistence.Azure""
-                        connection-string = ""{connectionString}""
-                    }}
-                }}
-            }}";
+        return builder;
     }
 
     public static AkkaConfigurationBuilder ConfigurePersistence(this AkkaConfigurationBuilder builder,
@@ -166,10 +145,7 @@ public static class AkkaConfiguration
                 var connectionString = configuration.GetConnectionString(connectionStringName);
                 Debug.Assert(connectionString != null, nameof(connectionString) + " != null");
 
-                // return builder.WithAzurePersistence(); // doesn't work right now
-                return builder.AddHocon(
-                    GetPersistenceHocon(connectionString).WithFallback(AzurePersistence.DefaultConfig),
-                    HoconAddMode.Append);
+                return builder.WithAzurePersistence(connectionString);
             }
             default:
                 throw new ArgumentOutOfRangeException();
@@ -188,22 +164,20 @@ public static class AkkaConfiguration
                 (system, registry, resolver) => s => Props.Create(() => new CounterActor(s)),
                 extractor, settings.ShardOptions);
         }
-        else
+
+        return builder.WithActors((system, registry, resolver) =>
         {
-            return builder.WithActors((system, registry, resolver) =>
-            {
-                var parent =
-                    system.ActorOf(
-                        GenericChildPerEntityParent.Props(extractor, s => Props.Create(() => new CounterActor(s))),
-                        "counters");
-                registry.Register<CounterActor>(parent);
-            });
-        }
+            var parent =
+                system.ActorOf(
+                    GenericChildPerEntityParent.Props(extractor, s => Props.Create(() => new CounterActor(s))),
+                    "counters");
+            registry.Register<CounterActor>(parent);
+        });
     }
 
     public static HashCodeMessageExtractor CreateCounterMessageRouter()
     {
-        var extractor = HashCodeMessageExtractor.Create(30, o =>
+        return HashCodeMessageExtractor.Create(30, o =>
         {
             return o switch
             {
@@ -211,6 +185,5 @@ public static class AkkaConfiguration
                 _ => null
             };
         }, o => o);
-        return extractor;
     }
 }
