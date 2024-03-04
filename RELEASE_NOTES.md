@@ -1,5 +1,6 @@
 ## [0.3.1] / March 4 2024
 
+* [Update `Akka.Persistence.Azure` setup code](https://github.com/akkadotnet/akkadotnet-templates/pull/223)
 * Upgraded to [Akka v1.5.17.1](https://github.com/akkadotnet/akka.net/releases/tag/1.5.17.1)
 * Upgraded to [Akka.Cluster.Hosting v1.5.17.1](https://github.com/akkadotnet/Akka.Hosting/releases/tag/1.5.17.1)
 * Upgraded to [Akka.Hosting.TestKit v1.5.17.1](https://github.com/akkadotnet/Akka.Hosting/releases/tag/1.5.17.1)
