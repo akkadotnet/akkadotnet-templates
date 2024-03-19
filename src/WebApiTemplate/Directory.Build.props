@@ -12,6 +12,6 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Dependencies">
-        <PbmVersion>1.4.0</PbmVersion>
+        <PbmVersion>1.4.1</PbmVersion>
     </PropertyGroup>
 </Project>
