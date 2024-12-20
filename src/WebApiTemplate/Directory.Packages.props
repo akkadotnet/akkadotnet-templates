@@ -5,12 +5,12 @@
 
   <!-- Akka.NET Package Versions -->
   <ItemGroup>
-    <PackageVersion Include="Akka" Version="1.5.31" />
+    <PackageVersion Include="Akka" Version="1.5.32" />
     <PackageVersion Include="Akka.Cluster.Hosting" Version="1.5.31.1" />
     <PackageVersion Include="Akka.Discovery.Azure" Version="1.5.31" />
     <PackageVersion Include="Akka.HealthCheck.Hosting.Web" Version="1.5.31" />
     <PackageVersion Include="Akka.Management" Version="1.5.31" />
-    <PackageVersion Include="Akka.Persistence.Azure.Hosting" Version="1.5.26" />
+    <PackageVersion Include="Akka.Persistence.Azure.Hosting" Version="1.5.32" />
     <PackageVersion Include="Microsoft.NET.Build.Containers" Version="8.0.200" />
     <PackageVersion Include="Petabridge.Cmd.Cluster.Sharding" Version="$(PbmVersion)" />
     <PackageVersion Include="Petabridge.Cmd.Cluster" Version="$(PbmVersion)" />
