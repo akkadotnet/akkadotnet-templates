@@ -9,7 +9,7 @@
     <PackageVersion Include="Akka.Cluster.Hosting" Version="1.5.33" />
     <PackageVersion Include="Akka.Discovery.Azure" Version="1.5.31" />
     <PackageVersion Include="Akka.HealthCheck.Hosting.Web" Version="1.5.31" />
-    <PackageVersion Include="Akka.Management" Version="1.5.31" />
+    <PackageVersion Include="Akka.Management" Version="1.5.33" />
     <PackageVersion Include="Akka.Persistence.Azure.Hosting" Version="1.5.32.1" />
     <PackageVersion Include="Microsoft.NET.Build.Containers" Version="8.0.200" />
     <PackageVersion Include="Petabridge.Cmd.Cluster.Sharding" Version="$(PbmVersion)" />
