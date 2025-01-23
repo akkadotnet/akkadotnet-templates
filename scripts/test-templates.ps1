@@ -100,4 +100,7 @@ $binlog = [IO.Path]::GetFullPath([IO.Path]::Combine($pwd, "..", "binlog", "test.
 Create-And-Build "akkaconsole" "AkkaConsole" "C#" "f" "net9.0" $binlog
 Create-And-Build "akkaconsole" "AkkaConsole" "C#" "f" "net8.0" $binlog
 
+Create-And-Build "akkastreams" "AkkaStreams" "C#" "f" "net9.0" $binlog
+Create-And-Build "akkastreams" "AkkaStreams" "C#" "f" "net8.0" $binlog
+
 # Ignore errors when files are still used by another process
