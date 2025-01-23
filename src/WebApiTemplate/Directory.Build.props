@@ -10,8 +10,4 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-
-    <PropertyGroup Label="Dependencies">
-        <PbmVersion>1.4.3</PbmVersion>
-    </PropertyGroup>
 </Project>

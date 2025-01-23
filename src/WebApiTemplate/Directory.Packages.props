@@ -3,13 +3,21 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
 
+
+  <PropertyGroup Label="SharedVersions">
+      <AkkaVersion>1.5.37</AkkaVersion>
+      <AkkaHostingVersion>1.5.37</AkkaHostingVersion>
+      <AkkaManagementVersion>1.5.37</AkkaManagementVersion>
+      <PbmVersion>1.4.4</PbmVersion>
+  </PropertyGroup>
+
   <!-- Akka.NET Package Versions -->
   <ItemGroup>
-    <PackageVersion Include="Akka" Version="1.5.35" />
-    <PackageVersion Include="Akka.Cluster.Hosting" Version="1.5.33" />
-    <PackageVersion Include="Akka.Discovery.Azure" Version="1.5.33" />
+    <PackageVersion Include="Akka" Version="$(AkkaVersion)" />
+    <PackageVersion Include="Akka.Cluster.Hosting" Version="$(AkkaHostingVersion)" />
+    <PackageVersion Include="Akka.Discovery.Azure" Version="$(AkkaManagementVersion)" />
     <PackageVersion Include="Akka.HealthCheck.Hosting.Web" Version="1.5.31" />
-    <PackageVersion Include="Akka.Management" Version="1.5.33" />
+    <PackageVersion Include="Akka.Management" Version="$(AkkaManagementVersion)" />
     <PackageVersion Include="Akka.Persistence.Azure.Hosting" Version="1.5.32.1" />
     <PackageVersion Include="Microsoft.NET.Build.Containers" Version="8.0.200" />
     <PackageVersion Include="Petabridge.Cmd.Cluster.Sharding" Version="$(PbmVersion)" />
@@ -31,6 +39,6 @@
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.1" />
     <PackageVersion Include="FluentAssertions" Version="7.0.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.3" />
-    <PackageVersion Include="Akka.Hosting.TestKit" Version="1.5.35" />
+    <PackageVersion Include="Akka.Hosting.TestKit" Version="$(AkkaHostingVersion)" />
   </ItemGroup>
 </Project>
