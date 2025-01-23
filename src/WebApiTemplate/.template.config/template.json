@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Akka",
-  "classifications": ["Akka.NET", "Akka.Cluster" "Web API","Cloud", "Service", "Web"],
+  "classifications": ["Akka.NET", "Akka.Cluster", "Web API","Cloud", "Service", "Web"],
   "name": "Akka.NET + Akka.Cluster + ASP.NET Core HTTP API",
   "description": "An out-of-the-box solution for creating an ASP.NET API integrated with Akka.NET.",
   "groupIdentity": "Akka.Cluster.WebApi",
