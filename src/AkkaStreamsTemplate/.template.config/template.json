@@ -10,7 +10,7 @@
   "defaultName": "AkkaStreams1",
   "tags": {
     "language": "C#",
-    "type": "solution"
+    "type": "project"
   },
   "sourceName": "AkkaStreamsTemplate",
   "preferNameDirectory": true,

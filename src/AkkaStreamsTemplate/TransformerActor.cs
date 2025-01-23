@@ -1,4 +1,4 @@
-﻿namespace AkkaStreamsTemplate.App;
+﻿namespace AkkaStreamsTemplate;
 
 public class TransformerActor : ReceiveActor
 {

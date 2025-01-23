@@ -1,6 +1,6 @@
 ﻿using Akka.Hosting;
 using Akka.Streams;
-using AkkaStreamsTemplate.App;
+using AkkaStreamsTemplate;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
