@@ -34,10 +34,12 @@ jobs:
         shell: pwsh
         run: |
           ./build.ps1
-      - name: "Build and install dev templates"
-        shell: pwsh
-        run: |
-          ./install-dev-templates.ps1
+      - name: "dotnet pack"
+        run: dotnet pack -c Release -o bin/nuget
+
+      - name: "Install templates"
+        run: dotnet new install bin/nuget/*.nupkg
+
       - name: "Test dev templates"
         shell: pwsh
         run: |
