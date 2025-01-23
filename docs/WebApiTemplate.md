@@ -13,7 +13,7 @@ dotnet new -i "Akka.Templates::*"
 From there, you can use this template via the following command:
 
 ```
-dotnet new akkaclusterwebapi -n "your project name"
+dotnet new akka.cluster.webapi -n "your project name"
 ```
 
 ## Usage

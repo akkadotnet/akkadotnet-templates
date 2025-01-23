@@ -98,11 +98,11 @@ if (Test-Path $binLogDir -ErrorAction SilentlyContinue) {
 # Use same log file for all executions
 $binlog = [IO.Path]::GetFullPath([IO.Path]::Combine($pwd, "..", "binlog", "test.binlog"))
 
-Create-And-Build "akkaconsole" "AkkaConsole" "C#" "f" "net9.0" $binlog
-Create-And-Build "akkaconsole" "AkkaConsole" "C#" "f" "net8.0" $binlog
+Create-And-Build "akka.console" "AkkaConsole" "C#" "f" "net9.0" $binlog
+Create-And-Build "akka.console" "AkkaConsole" "C#" "f" "net8.0" $binlog
 
-Create-And-Build "akkastreams" "AkkaStreams" "C#" "f" "net9.0" $binlog
-Create-And-Build "akkastreams" "AkkaStreams" "C#" "f" "net8.0" $binlog
+Create-And-Build "akka.streams" "AkkaStreams" "C#" "f" "net9.0" $binlog
+Create-And-Build "akka.streams" "AkkaStreams" "C#" "f" "net8.0" $binlog
 
 Test-Template "akka.cluster.webapi" "ClusterWebTemplate" "C#" "f" "net9.0" $binlog
 Test-Template "akka.cluster.webapi" "ClusterWebTemplate" "C#" "f" "net8.0" $binlog

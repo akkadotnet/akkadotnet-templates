@@ -6,7 +6,7 @@
   "description": "A simple console application that uses Akka.Streams and Akka.Hosting to asynchonrously process data.",
   "groupIdentity": "Akka.Streams",
   "identity": "Akka.Streams.CSharp",
-  "shortName": "akkastreams",
+  "shortName": "akka.streams",
   "defaultName": "AkkaStreams1",
   "tags": {
     "language": "C#",

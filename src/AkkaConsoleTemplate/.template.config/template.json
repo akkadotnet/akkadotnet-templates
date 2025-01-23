@@ -6,7 +6,7 @@
   "description": "A simple console application that uses Akka.NET and Akka.Hosting.",
   "groupIdentity": "Akka.Console",
   "identity": "Akka.Console.CSharp",
-  "shortName": "akkaconsole",
+  "shortName": "akka.console",
   "defaultName": "AkkaConsole1",
   "tags": {
     "language": "C#",
