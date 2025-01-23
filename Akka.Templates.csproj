@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0</PackageVersion>
+    <VersionPrefix>0.4.1</VersionPrefix>
     <PackageId>Akka.Templates</PackageId>
     <Title>Akka.NET Project Templates</Title>
     <Authors>AkkaDotNet</Authors>
     <Description>Templates to use when creating new Akka.NET applications.</Description>
     <PackageTags>dotnet-new;templates;akkadotnet;akka;</PackageTags>
+    <PackageReleaseNotes>* Upgraded all Akka.NET dependenices to [Akka v1.5.28](https://github.com/akkadotnet/akka.net/releases/tag/1.5.28)</PackageReleaseNotes>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
@@ -20,15 +20,12 @@
     <NoWarn>$(NoWarn);CS1591;xUnit1013</NoWarn>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
-
   <ItemGroup>
     <Content Include="src\**\*" Exclude="src\**\bin\**;src\**\obj\**" />
     <Compile Remove="**\*" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)\logo.png" Pack="true" Visible="false" PackagePath="\" />
     <None Include="$(MSBuildThisFileDirectory)\README.md" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
-
 </Project>
