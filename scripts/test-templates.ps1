@@ -56,6 +56,8 @@ function Test-Template {
 
     # Build
     Exec { dotnet build $outDir/$lang/$folderName -bl:$bl }
+    Exec { dotnet test output/$lang/$folderName -bl:$bl } # some templates might include unit tests
+    Exec { dotnet publish -c Release -t:PublishContainer output/$lang/$folderName -bl:$bl }
 }
 
 function Create-And-Build {
@@ -78,7 +80,6 @@ function Create-And-Build {
 
     # Build
     Exec { dotnet build output/$lang/$folderName -bl:$bl }
-    Exec { dotnet test output/$lang/$folderName -bl:$bl } # some templates might include unit tests
 }
 
 # Clear file system from possible previous runs
@@ -103,5 +104,8 @@ Create-And-Build "akkaconsole" "AkkaConsole" "C#" "f" "net8.0" $binlog
 
 Create-And-Build "akkastreams" "AkkaStreams" "C#" "f" "net9.0" $binlog
 Create-And-Build "akkastreams" "AkkaStreams" "C#" "f" "net8.0" $binlog
+
+Test-Template "akka.cluster.webapi" "ClusterWebTemplate" "C#" "f" "net9.0" $binlog
+Test-Template "akka.cluster.webapi" "ClusterWebTemplate" "C#" "f" "net8.0" $binlog
 
 # Ignore errors when files are still used by another process

@@ -6,21 +6,32 @@
   "description": "An out-of-the-box solution for creating an ASP.NET API integrated with Akka.NET.",
   "groupIdentity": "Akka.Cluster.WebApi",
   "identity": "Akka.Cluster.WebApi.CSharp",
-  "shortName": "akkaclusterwebapi",
+  "shortName": "akka.cluster.webapi",
   "defaultName": "AkkaHttpApi1",
   "tags": {
     "language": "C#",
     "type": "solution"
   },
+  "symbols": {
+      "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net8.0",
+          "description": "Target net8.0"
+        },
+        {
+          "choice": "net9.0",
+          "description": "Target net9.0"
+        }
+      ],
+      "replaces": "FrameworkParameter",
+      "defaultValue": "net9.0"
+    },
+  },
   "sourceName": "WebApiTemplate",
   "preferNameDirectory": true,
-  "primaryOutputs": [{ "path": "WebApiTemplate.sln" }],
-  "sources": [
-    {
-      
-    }
-  ],
-  "symbols": {
-
-   },
+  "primaryOutputs": [{ "path": "WebApiTemplate.sln" }]
 }
