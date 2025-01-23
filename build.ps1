@@ -13,10 +13,3 @@ $releaseNotes = Get-ReleaseNotes -MarkdownFile (Join-Path -Path $PSScriptRoot -C
 UpdateVersionAndReleaseNotes -ReleaseNotesResult $releaseNotes -XmlFilePath (Join-Path -Path $PSScriptRoot -ChildPath "Akka.Templates.csproj") 
 
 Write-Output "Added release notes $releaseNotes"
-
-######################################################################
-# Step 2: Build output
-######################################################################
-$outputDir = ".\bin\nuget"
-
-dotnet pack -c Release -o $outputDir
