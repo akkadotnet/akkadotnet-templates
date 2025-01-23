@@ -1,5 +1,5 @@
 ﻿using Akka.Hosting;
-using AkkaConsoleTemplate.App;
+using AkkaConsoleTemplate;
 using Microsoft.Extensions.Hosting;
 
 var hostBuilder = new HostBuilder();

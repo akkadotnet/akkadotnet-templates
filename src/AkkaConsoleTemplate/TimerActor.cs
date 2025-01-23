@@ -1,6 +1,6 @@
 using Akka.Hosting;
 
-namespace AkkaConsoleTemplate.App;
+namespace AkkaConsoleTemplate;
 
 public class TimerActor : ReceiveActor, IWithTimers
 {

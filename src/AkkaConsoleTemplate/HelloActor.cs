@@ -1,4 +1,4 @@
-﻿namespace AkkaConsoleTemplate.App;
+﻿namespace AkkaConsoleTemplate;
 
 public class HelloActor : ReceiveActor
 {
