@@ -101,4 +101,3 @@ Create-And-Build "akkaconsole" "AkkaConsole" "C#" "f" "net9.0" $binlog
 Create-And-Build "akkaconsole" "AkkaConsole" "C#" "f" "net8.0" $binlog
 
 # Ignore errors when files are still used by another process
-Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "output/C#"
