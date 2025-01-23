@@ -45,17 +45,16 @@ function Test-Template {
         [Parameter(Position=5,Mandatory=0)][string]$bl
     )
 
-    $outDir = [IO.Path]::GetFullPath([IO.Path]::Combine($pwd, "..", "output"))
     $folderName = $name + $parameterName + $value
     
     # Remove dots and - from folderName because in sln it will cause errors when building project
     $folderName = $folderName -replace "[.-]"
     
     # Create the project
-    Exec { dotnet new $template -o $outDir/$lang/$folderName -$parameterName $value -lang $lang }
+    Exec { dotnet new $template -o output//$lang/$folderName -$parameterName $value -lang $lang }
 
     # Build
-    Exec { dotnet build $outDir/$lang/$folderName -bl:$bl }
+    Exec { dotnet build output/$lang/$folderName -bl:$bl }
     Exec { dotnet test output/$lang/$folderName -bl:$bl } # some templates might include unit tests
     Exec { dotnet publish -c Release -t:PublishContainer output/$lang/$folderName -bl:$bl }
 }
