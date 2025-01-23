@@ -21,26 +21,21 @@
         "path": "Program.cs"
     }
   ],
-  "sources": [
-    {
-      
-    }
-  ],
   "symbols": {
-      "Framework": {
-        "type": "parameter",
-        "description": "The target framework for the project.",
-        "datatype": "choice",
-        "choices": [
-          {
-            "choice": "net8.0",
-            "description": "Target net8.0"
-          },
-          {
-            "choice": "net9.0",
-            "description": "Target net9.0"
-          }
-        ],
+    "Framework": {
+    "type": "parameter",
+    "description": "The target framework for the project.",
+    "datatype": "choice",
+    "choices": [
+        {
+          "choice": "net8.0",
+          "description": "Target net8.0"
+        },
+        {
+          "choice": "net9.0",
+          "description": "Target net9.0"
+        }
+      ],
       "replaces": "FrameworkParameter",
       "defaultValue": "net9.0"
     },
@@ -50,7 +45,8 @@
       "description": "If specified, skips the automatic restore of the project on create.",
       "defaultValue": "false"
     },
-    "postActions": [
+  },
+  "postActions": [
     {
       "id": "restore",
       "condition": "(!skipRestore)",
@@ -73,5 +69,4 @@
       "continueOnError": true
     }
   ]
-  },
 }
