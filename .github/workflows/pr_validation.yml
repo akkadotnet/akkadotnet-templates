@@ -44,8 +44,9 @@ jobs:
         shell: pwsh
         run: |
           ./scripts/test-templates.ps1
-          
+
       - name: Archive production artifacts
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
           name: package

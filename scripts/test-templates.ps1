@@ -78,6 +78,7 @@ function Create-And-Build {
 
     # Build
     Exec { dotnet build output/$lang/$folderName -bl:$bl }
+    Exec { dotnet test output/$lang/$folderName -bl:$bl } # some templates might include unit tests
 }
 
 # Clear file system from possible previous runs
