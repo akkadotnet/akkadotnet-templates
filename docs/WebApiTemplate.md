@@ -1,4 +1,4 @@
-# WebApiTemplate
+# Akka.Cluster WebApiTemplate
 
 This template is designed to integrate [Akka.NET](https://getakka.net/) Clusters with ASP.NET Web APIs.
 
@@ -13,7 +13,7 @@ dotnet new -i "Akka.Templates::*"
 From there, you can use this template via the following command:
 
 ```
-dotnet new akkawebapi -n "your project name"
+dotnet new akkaclusterwebapi -n "your project name"
 ```
 
 ## Usage
