@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Akka",
+  "classifications": ["Akka.NET", "Actors", "Console", "Windows", "Linux", "macOS"],
+  "name": "Akka.NET Console Application",
+  "description": "A simple console application that uses Akka.NET and Akka.Hosting.",
+  "groupIdentity": "Akka.Console",
+  "identity": "Akka.Console.FSharp",
+  "shortName": "akka.console",
+  "defaultName": "AkkaConsole1",
+  "tags": {
+    "language": "F#",
+    "type": "project"
+  },
+  "symbols": {
+      "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net8.0",
+          "description": "Target net8.0"
+        },
+        {
+          "choice": "net9.0",
+          "description": "Target net9.0"
+        }
+      ],
+      "replaces": "FrameworkParameter",
+      "defaultValue": "net9.0"
+    }
+  },
+  "sourceName": "AkkaConsoleTemplate",
+  "preferNameDirectory": true,
+  "primaryOutputs": [
+      { "path": "AkkaConsoleTemplate.fsproj" },
+      {  
+        "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+        "path": "Program.cs"
+      }
+    ],
+  "postActions": [
+  ]
+}
