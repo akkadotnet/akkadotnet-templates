@@ -101,6 +101,9 @@ $binlog = [IO.Path]::GetFullPath([IO.Path]::Combine($pwd, "..", "binlog", "test.
 Create-And-Build "akka.console" "AkkaConsole" "C#" "f" "net9.0" $binlog
 Create-And-Build "akka.console" "AkkaConsole" "C#" "f" "net8.0" $binlog
 
+Create-And-Build "akka.console" "AkkaConsole" "F#" "f" "net9.0" $binlog
+Create-And-Build "akka.console" "AkkaConsole" "F#" "f" "net8.0" $binlog
+
 Create-And-Build "akka.streams" "AkkaStreams" "C#" "f" "net9.0" $binlog
 Create-And-Build "akka.streams" "AkkaStreams" "C#" "f" "net8.0" $binlog
 
