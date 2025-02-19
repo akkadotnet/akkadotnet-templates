@@ -83,13 +83,22 @@ let configureAkka (builder: IServiceCollection) =
         |> ignore))
 
 // Example actor with dependency injection
-type TimerActor(helloActor: IRequiredActor<HelloActor>) =
-    inherit ReceiveActor()
-    
-    do
-        let helloActorRef = helloActor.ActorRef
-        base.Receive<string>(fun message ->
-            helloActorRef.Tell(message))
+type TimerActor =
+    inherit ReceiveActor
+    [<DefaultValue>] val mutable timer: ITimerScheduler
+    val mutable helloActor: IActorRef
+
+    new(helloActor: IRequiredActor<HelloActor>) = 
+        {helloActor = helloActor.ActorRef}
+        then
+            base.Receive<string>(fun message -> helloActor.ActorRef.Tell(message))        
+
+    interface IWithTimers with 
+        member this.Timers with get() = this.timer and set(value) = this.timer <- value
+
+    override this.PreStart() =
+        let timer = this :> IWithTimers
+        timer.Timers.StartPeriodicTimer("key", "hello", System.TimeSpan.FromSeconds(1.0) )
 ```
 
 </details>
