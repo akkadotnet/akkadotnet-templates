@@ -8,13 +8,13 @@ updates:
     time: "11:00"
 
 - package-ecosystem: github-actions
-  directory: "/src/AkkaConsoleTemplate"
+  directory: "/src/csharp/AkkaConsoleTemplate"
   schedule:
     interval: daily
     time: "11:00"
 
 - package-ecosystem: github-actions
-  directory: "/src/AkkaStreamsTemplate"
+  directory: "/src/csharp/AkkaStreamsTemplate"
   schedule:
     interval: daily
     time: "11:00"
@@ -26,19 +26,25 @@ updates:
     time: "11:00"
 
 - package-ecosystem: nuget
-  directory: "/src/AkkaConsoleTemplate"
+  directory: "/src/csharp/AkkaConsoleTemplate"
   schedule:
     interval: daily
     time: "11:00"
 
 - package-ecosystem: nuget
-  directory: "/src/AkkaStreamsTemplate"
+  directory: "/src/csharp/AkkaStreamsTemplate"
   schedule:
     interval: daily
     time: "11:00"
 
 - package-ecosystem: nuget
   directory: "/src/WebApiTemplate"
+  schedule:
+    interval: daily
+    time: "11:00"
+
+- package-ecosystem: nuget
+  directory: "/src/fsharp/AkkaConsoleTemplate"
   schedule:
     interval: daily
     time: "11:00"
