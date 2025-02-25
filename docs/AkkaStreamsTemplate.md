@@ -55,6 +55,9 @@ IActorRef transformer = host.Services.GetRequiredService<IRequiredActor<Transfor
 
 The real guts of this application is, of course, [Akka.Streams](https://getakka.net/articles/streams/introduction.html):
 
+<details open>
+<summary><b>C# Implementation</b></summary>
+
 ```csharp
 // create a stream that iterates over the numbers 1 to 100
 await Source.From(Enumerable.Range(1, 1000))
@@ -68,6 +71,7 @@ await Source.From(Enumerable.Range(1, 1000))
     })
     .RunForeach(Console.WriteLine, system); // write all output to console
 ```
+</details>
 
 <details>
 <summary><b>F# Implementation</b></summary>
