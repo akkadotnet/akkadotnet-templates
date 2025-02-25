@@ -13,7 +13,11 @@ dotnet new -i "Akka.Templates::*"
 From there, you can use this template via the following command:
 
 ```
-dotnet new akka.streams -n "your project name"
+# For C#
+dotnet new akka.streams -n "your-project-name"
+
+# For F#
+dotnet new akka.streams -n "your-project-name" -lang F#
 ```
 
 ## How It Works
@@ -64,5 +68,43 @@ await Source.From(Enumerable.Range(1, 1000))
     })
     .RunForeach(Console.WriteLine, system); // write all output to console
 ```
+
+<details>
+<summary><b>F# Implementation</b></summary>
+
+```fsharp
+let hostbuilder = HostBuilder()
+
+hostbuilder.ConfigureServices(fun services ->
+    services.AddAkka("MyActorSystem", fun b ->
+
+        b.WithActors(fun sys reg  -> 
+            let helloActor = sys.ActorOf(Props.Create<HelloActor>(fun () -> HelloActor()), "hello-actor")
+            reg.Register<HelloActor>(helloActor)) |> ignore
+
+        b.WithActors(fun sys reg resolver -> 
+            let timerActorProps = resolver.Props<TimerActor>()
+            let timerActor = sys.ActorOf(timerActorProps, "timer-actor")
+            reg.Register<TimerActor>(timerActor)) |> ignore
+
+    ) |> ignore
+) |> ignore
+
+let host = hostbuilder.Build()
+host.RunAsync().Wait()
+
+// example transform actor
+type TransformActor() as this =
+    inherit ReceiveActor()    
+
+    do
+        this.Receive<string> (fun (message:string)-> 
+                                    let actor = this :> IInternalActor             
+                                    actor.ActorContext.Sender.Tell (message.ToUpper())                                    
+                                    )
+
+```
+
+</details>
 
 This is a simple, finite stream that uses some of [Akka.Streams' built-in stages](https://getakka.net/articles/streams/builtinstages.html) to demonstrate asynchronous stream processing as well as [Akka.NET actor integration with Akka.Streams](https://getakka.net/articles/streams/integration.html).
