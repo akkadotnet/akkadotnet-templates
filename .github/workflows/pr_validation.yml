@@ -34,6 +34,7 @@ jobs:
         shell: pwsh
         run: |
           ./build.ps1
+          
       - name: "dotnet pack"
         run: dotnet pack -c Release -o bin/nuget
 
