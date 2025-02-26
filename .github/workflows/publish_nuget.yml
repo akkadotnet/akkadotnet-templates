@@ -21,6 +21,11 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
+    - name: "Update release notes and version"
+      shell: pwsh
+      run: |
+        ./build.ps1
+
     - name: Create Packages
       run:  dotnet pack -c Release -o ./output
 
