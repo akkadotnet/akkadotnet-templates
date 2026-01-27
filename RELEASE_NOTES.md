@@ -1,3 +1,8 @@
+#### 1.3.1 January 26th 2026 ####
+
+* Upgraded Akka.NET dependency to v1.5.59
+* Upgraded Akka.Hosting dependency to v1.5.59
+
 #### 1.3.0 November 3rd 2025 ####
 
 * Upgraded Akka.NET dependency to v1.5.55
