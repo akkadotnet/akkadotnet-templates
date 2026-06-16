@@ -1,4 +1,4 @@
-﻿namespace WebApiTemplate.Domain;
+﻿namespace {SourceName}.Domain;
 
 /// <summary>
 /// Queries are similar to commands, but they have no side effects.

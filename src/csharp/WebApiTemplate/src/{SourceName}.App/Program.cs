@@ -1,6 +1,6 @@
 using Akka.HealthCheck.Hosting;
 using Akka.HealthCheck.Hosting.Web;
-using WebApiTemplate.App.Configuration;
+using {SourceName}.App.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 

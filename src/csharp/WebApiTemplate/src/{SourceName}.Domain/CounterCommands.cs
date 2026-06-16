@@ -1,4 +1,4 @@
-﻿namespace WebApiTemplate.Domain;
+﻿namespace {SourceName}.Domain;
 
 /// <summary>
 /// Defines a command that is related to a counter.

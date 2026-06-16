@@ -2,12 +2,12 @@ using Akka.Hosting;
 using Akka.Hosting.TestKit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebApiTemplate.App.Actors;
-using WebApiTemplate.App.Configuration;
-using WebApiTemplate.Domain;
+using {SourceName}.App.Actors;
+using {SourceName}.App.Configuration;
+using {SourceName}.Domain;
 using Xunit.Abstractions;
 
-namespace WebApiTemplate.App.Tests;
+namespace {SourceName}.App.Tests;
 
 public class CounterActorSpecs : TestKit
 {

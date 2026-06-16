@@ -13,10 +13,10 @@ using Akka.Persistence.Azure.Hosting;
 using Akka.Persistence.Hosting;
 using Akka.Remote.Hosting;
 using Akka.Util;
-using WebApiTemplate.App.Actors;
-using WebApiTemplate.Domain;
+using {SourceName}.App.Actors;
+using {SourceName}.Domain;
 
-namespace WebApiTemplate.App.Configuration;
+namespace {SourceName}.App.Configuration;
 
 public static class AkkaConfiguration
 {

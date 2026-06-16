@@ -1,9 +1,9 @@
 ﻿using Akka.Actor;
 using Akka.Event;
 using Akka.Persistence;
-using WebApiTemplate.Domain;
+using {SourceName}.Domain;
 
-namespace WebApiTemplate.App.Actors;
+namespace {SourceName}.App.Actors;
 
 public record Counter(string CounterId, int CurrentValue)
 {

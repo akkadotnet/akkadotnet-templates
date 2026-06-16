@@ -4,7 +4,7 @@ using Petabridge.Cmd.Cluster.Sharding;
 using Petabridge.Cmd.Host;
 using Petabridge.Cmd.Remote;
 
-namespace WebApiTemplate.App.Configuration;
+namespace {SourceName}.App.Configuration;
 
 public static class PetabridgeCmdConfiguration
 {

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Akka.Hosting" Version="1.5.38" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0"/>
+    <PackageReference Include="Akka.Hosting" Version="1.5.60" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1"/>
   </ItemGroup>
 
   <ItemGroup>        

@@ -1,7 +1,7 @@
 ﻿using Akka.Actor;
 using Akka.Cluster.Sharding;
 
-namespace WebApiTemplate.App.Actors;
+namespace {SourceName}.App.Actors;
 
 /// <summary>
 /// A generic "child per entity" parent actor.

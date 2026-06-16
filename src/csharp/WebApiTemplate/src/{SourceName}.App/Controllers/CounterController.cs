@@ -1,10 +1,10 @@
 using Akka.Actor;
 using Akka.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using WebApiTemplate.App.Actors;
-using WebApiTemplate.Domain;
+using {SourceName}.App.Actors;
+using {SourceName}.Domain;
 
-namespace WebApiTemplate.App.Controllers;
+namespace {SourceName}.App.Controllers;
 
 [ApiController]
 [Route("[controller]")]

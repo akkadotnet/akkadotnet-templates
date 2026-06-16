@@ -1,4 +1,4 @@
-﻿namespace WebApiTemplate.Domain;
+﻿namespace {SourceName}.Domain;
 
 /// <summary>
 /// Events are facts of the system. Counter events deal in definitive state changes with the counter.
