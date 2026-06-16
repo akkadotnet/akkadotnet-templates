@@ -1,4 +1,4 @@
-﻿namespace WebApiTemplate.Domain;
+﻿namespace {SourceName}.Domain;
 
 /// <summary>
 /// Counters are the only entities that have a counter id.

@@ -2,7 +2,7 @@
 using Akka.Cluster.Hosting;
 using Akka.Remote.Hosting;
 
-namespace WebApiTemplate.App.Configuration;
+namespace {SourceName}.App.Configuration;
 
 public class AkkaManagementOptions
 {

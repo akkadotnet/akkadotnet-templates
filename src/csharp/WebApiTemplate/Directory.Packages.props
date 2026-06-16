@@ -5,9 +5,9 @@
 
 
   <PropertyGroup Label="SharedVersions">
-      <AkkaVersion>1.5.59</AkkaVersion>
-      <AkkaHostingVersion>1.5.59</AkkaHostingVersion>
-      <AkkaManagementVersion>1.5.59</AkkaManagementVersion>
+      <AkkaVersion>1.5.60</AkkaVersion>
+      <AkkaHostingVersion>1.5.60</AkkaHostingVersion>
+      <AkkaManagementVersion>1.5.60</AkkaManagementVersion>
       <PbmVersion>1.4.4</PbmVersion>
   </PropertyGroup>
 

@@ -12,7 +12,7 @@
     "language": "F#",
     "type": "project"
   },
-  "sourceName": "AkkaStreamsTemplate",
+  "sourceName": "AkkaStreamsTemplateFSharp",
   "preferNameDirectory": true,
   "primaryOutputs": [
     { "path": "AkkaStreamsTemplate.fsproj" },
@@ -34,10 +34,14 @@
         {
           "choice": "net9.0",
           "description": "Target net9.0"
+        },
+        {
+          "choice": "net10.0",
+          "description": "Target net10.0"
         }
       ],
       "replaces": "FrameworkParameter",
-      "defaultValue": "net9.0"
+      "defaultValue": "net10.0"
     }
   },
   "postActions": [
@@ -54,7 +58,7 @@
     {
       "id": "editor",
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
-      "description": "Opens Program.cs in the editor",
+      "description": "Opens Program.fs in the editor",
       "manualInstructions": [ ],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
       "args": {

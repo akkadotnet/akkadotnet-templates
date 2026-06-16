@@ -1,0 +1,15 @@
+<Solution>
+  <Project Path="build">
+    <BuildType Project="?" />
+    <Platform Project="?" />
+    <Build Project="false" />
+    <Properties Name="SolutionItems">
+      <Property Name="Directory.Build.props" Value="Directory.Build.props" />
+      <Property Name="Directory.Packages.props" Value="Directory.Packages.props" />
+      <Property Name="nuget.config" Value="nuget.config" />
+    </Properties>
+  </Project>
+  <Project Path="src/{SourceName}.App/{SourceName}.App.csproj" />
+  <Project Path="src/{SourceName}.Domain/{SourceName}.Domain.csproj" />
+  <Project Path="tests/{SourceName}.App.Tests/{SourceName}.App.Tests.csproj" />
+</Solution>

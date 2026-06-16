@@ -25,21 +25,42 @@
         {
           "choice": "net9.0",
           "description": "Target net9.0"
+        },
+        {
+          "choice": "net10.0",
+          "description": "Target net10.0"
         }
       ],
       "replaces": "FrameworkParameter",
-      "defaultValue": "net9.0"
+      "defaultValue": "net10.0"
     }
   },
-  "sourceName": "AkkaConsoleTemplate",
+  "sourceName": "AkkaConsoleTemplateFSharp",
   "preferNameDirectory": true,
   "primaryOutputs": [
-      { "path": "AkkaConsoleTemplate.fsproj" },
-      {  
-        "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
-        "path": "Program.cs"
-      }
+      { "path": "AkkaConsoleTemplate.fsproj" }
     ],
   "postActions": [
+    {
+      "id": "restore",
+      "condition": "(!skipRestore)",
+      "description": "Restore NuGet packages required by this project.",
+      "manualInstructions": [
+        { "text": "Run 'dotnet restore'" }
+      ],
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+      "continueOnError": true
+    },
+    {
+      "id": "editor",
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "description": "Opens Program.fs in the editor",
+      "manualInstructions": [ ],
+      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+      "args": {
+        "files": "1"
+      },
+      "continueOnError": true
+    }
   ]
 }
