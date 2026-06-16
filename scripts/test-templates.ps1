@@ -56,7 +56,7 @@ function Test-Template {
     # Build
     Exec { dotnet build output/$lang/$folderName -bl:$bl }
     Exec { dotnet test output/$lang/$folderName -bl:$bl } # some templates might include unit tests
-    Exec { dotnet publish -c Release -t:PublishContainer output/$lang/$folderName -bl:$bl }
+    # Note: Docker container publish skipped in CI (no Docker available)
 }
 
 function Create-And-Build {
