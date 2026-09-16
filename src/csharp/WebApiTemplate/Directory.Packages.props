@@ -5,38 +5,48 @@
 
 
   <PropertyGroup Label="SharedVersions">
-      <AkkaVersion>1.5.59</AkkaVersion>
-      <AkkaHostingVersion>1.5.59</AkkaHostingVersion>
-      <AkkaManagementVersion>1.5.59</AkkaManagementVersion>
+      <AkkaVersion>1.5.70</AkkaVersion>
+      <AkkaHostingVersion>1.5.70</AkkaHostingVersion>
+      <AkkaManagementVersion>1.5.70</AkkaManagementVersion>
+      <AkkaAspireVersion>1.5.70</AkkaAspireVersion>
+      <AspireHostingVersion>13.3.5</AspireHostingVersion>
       <PbmVersion>1.4.4</PbmVersion>
   </PropertyGroup>
 
   <!-- Akka.NET Package Versions -->
   <ItemGroup>
     <PackageVersion Include="Akka" Version="$(AkkaVersion)" />
+    <PackageVersion Include="Akka.Aspire" Version="$(AkkaAspireVersion)" />
+    <PackageVersion Include="Akka.Aspire.Hosting" Version="$(AkkaAspireVersion)" />
     <PackageVersion Include="Akka.Cluster.Hosting" Version="$(AkkaHostingVersion)" />
     <PackageVersion Include="Akka.Discovery.Azure" Version="$(AkkaManagementVersion)" />
-    <PackageVersion Include="Akka.HealthCheck.Hosting.Web" Version="1.5.37" />
+    <PackageVersion Include="Akka.Discovery.Redis" Version="$(AkkaManagementVersion)" />
     <PackageVersion Include="Akka.Management" Version="$(AkkaManagementVersion)" />
-    <PackageVersion Include="Akka.Persistence.Azure.Hosting" Version="1.5.59" />
-    <PackageVersion Include="Microsoft.NET.Build.Containers" Version="8.0.200" />
+    <PackageVersion Include="Akka.Persistence.Azure.Hosting" Version="1.5.60" />
     <PackageVersion Include="Petabridge.Cmd.Cluster.Sharding" Version="$(PbmVersion)" />
     <PackageVersion Include="Petabridge.Cmd.Cluster" Version="$(PbmVersion)" />
     <PackageVersion Include="Petabridge.Cmd.Remote" Version="$(PbmVersion)" />
   </ItemGroup>
 
+  <!-- Aspire Package Versions -->
+  <ItemGroup>
+    <PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireHostingVersion)" />
+    <PackageVersion Include="Aspire.Hosting.Azure.Storage" Version="$(AspireHostingVersion)" />
+    <PackageVersion Include="Aspire.Hosting.Redis" Version="$(AspireHostingVersion)" />
+  </ItemGroup>
+
   <!-- ASP.NET Core Package Versions -->
   <ItemGroup>
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="7.2.0" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
   </ItemGroup>
 
   <!-- Test Package Versions -->
   <ItemGroup>
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageVersion Include="xunit" Version="2.9.2" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.1" />
+    <PackageVersion Include="xunit.v3" Version="3.2.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.0" />
     <PackageVersion Include="FluentAssertions" Version="7.0.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.3" />
     <PackageVersion Include="Akka.Hosting.TestKit" Version="$(AkkaHostingVersion)" />

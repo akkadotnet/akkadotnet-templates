@@ -5,7 +5,6 @@ using Microsoft.Extensions.Hosting;
 using WebApiTemplate.App.Actors;
 using WebApiTemplate.App.Configuration;
 using WebApiTemplate.Domain;
-using Xunit.Abstractions;
 
 namespace WebApiTemplate.App.Tests;
 

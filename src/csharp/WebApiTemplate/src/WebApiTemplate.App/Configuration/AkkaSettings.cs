@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using Akka.Cluster.Hosting;
 using Akka.Remote.Hosting;
 
@@ -53,6 +53,13 @@ public class AkkaSettings
     public bool UseClustering { get; set; } = true;
 
     public bool LogConfigOnStart { get; set; } = false;
+
+    /// <summary>
+    /// Determines which Akka.Discovery backend is used for cluster bootstrap when
+    /// <see cref="UseClustering"/> is enabled. Valid values: "redis" (default) or "azure".
+    /// This is injected from the template's Discovery symbol at template-generation time.
+    /// </summary>
+    public string DiscoveryBackend { get; set; } = "DiscoveryBackendParameter";
 
     public RemoteOptions RemoteOptions { get; set; } = new()
     {

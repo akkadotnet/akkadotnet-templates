@@ -1,5 +1,4 @@
-using Akka.HealthCheck.Hosting;
-using Akka.HealthCheck.Hosting.Web;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using WebApiTemplate.App.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,12 +14,11 @@ builder.Configuration
     .AddEnvironmentVariables();
 
 // Add services to the container.
-builder.Services.WithAkkaHealthCheck(HealthCheckType.All);
+builder.Services.AddHealthChecks();
 builder.Services.ConfigureWebApiAkka(builder.Configuration, (akkaConfigurationBuilder, serviceProvider) =>
 {
     // we configure instrumentation separately from the internals of the ActorSystem
     akkaConfigurationBuilder.ConfigurePetabridgeCmd();
-    akkaConfigurationBuilder.WithWebHealthCheck(serviceProvider);
 });
 
 builder.Services.AddControllers();
@@ -38,11 +36,19 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.Equals("A
 }
 
 app.UseHttpsRedirection();
-app.MapAkkaHealthCheckRoutes(optionConfigure: (_, opt) =>
+
+// Akka.NET liveness + cluster membership health checks are registered by
+// WithAspireClusterBootstrap; map ASP.NET Core endpoints for them here.
+app.MapHealthChecks("/healthz");
+app.MapHealthChecks("/healthz/live", new HealthCheckOptions
 {
-    // Use a custom response writer to output a json of all reported statuses
-    opt.ResponseWriter = Helper.JsonResponseWriter;
-}); // needed for Akka.HealthCheck
+    Predicate = c => c.Tags.Contains("liveness")
+});
+app.MapHealthChecks("/healthz/ready", new HealthCheckOptions
+{
+    Predicate = c => c.Tags.Contains("readiness")
+});
+
 app.UseAuthorization();
 
 app.MapControllers();
