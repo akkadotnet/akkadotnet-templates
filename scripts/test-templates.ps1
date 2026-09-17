@@ -50,8 +50,11 @@ function Test-Template {
     # Remove dots and - from folderName because in sln it will cause errors when building project
     $folderName = $folderName -replace "[.-]"
 
+    # Single-letter params use a single dash short-name (-f); longer names need --long-name.
+    $optPrefix = if ($parameterName.Length -eq 1) { "-" } else { "--" }
+
     # Create the project
-    Exec { dotnet new $template -o output//$lang/$folderName -$parameterName $value -lang $lang }
+    Exec { dotnet new $template -o output//$lang/$folderName $optPrefix$parameterName $value -lang $lang }
 
     # Build, test, and publish the container
     Exec { dotnet build output/$lang/$folderName -bl:$bl }
@@ -74,8 +77,11 @@ function Create-And-Build {
     # Remove dots and - from folderName because in sln it will cause errors when building project
     $folderName = $folderName -replace "[.-]"
 
+    # Single-letter params use a single dash short-name (-f); longer names need --long-name.
+    $optPrefix = if ($parameterName.Length -eq 1) { "-" } else { "--" }
+
     # Create the project
-    Exec { dotnet new $template -o output/$lang/$folderName -$parameterName $value -lang $lang }
+    Exec { dotnet new $template -o output/$lang/$folderName $optPrefix$parameterName $value -lang $lang }
 
     # Build
     Exec { dotnet build output/$lang/$folderName -bl:$bl }
