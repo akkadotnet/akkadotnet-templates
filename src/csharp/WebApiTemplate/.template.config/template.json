@@ -33,5 +33,5 @@
   },
   "sourceName": "WebApiTemplate",
   "preferNameDirectory": true,
-  "primaryOutputs": [{ "path": "WebApiTemplate.sln" }]
+  "primaryOutputs": [{ "path": "WebApiTemplate.slnx" }]
 }

@@ -4,7 +4,19 @@
         <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <!-- Docker container publishing via the .NET SDK (dotnet publish -t:PublishContainer) -->
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <ContainerRepository>webpapitemplate-app</ContainerRepository>
+        <ContainerImageTags>$(VersionPrefix);latest</ContainerImageTags>
     </PropertyGroup>
+
+    <ItemGroup>
+        <ContainerPort Include="80" Type="tcp" />
+        <ContainerPort Include="443" Type="tcp" />
+        <ContainerPort Include="8558" Type="tcp" />
+        <ContainerPort Include="8081" Type="tcp" />
+        <ContainerPort Include="9110" Type="tcp" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Akka.Aspire" />
