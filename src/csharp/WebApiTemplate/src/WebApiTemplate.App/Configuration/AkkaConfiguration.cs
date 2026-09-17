@@ -7,8 +7,6 @@ using Akka.Configuration;
 using Akka.Discovery.Azure;
 using Akka.Discovery.Redis;
 using Akka.Hosting;
-using Akka.Persistence.Azure;
-using Akka.Persistence.Azure.Hosting;
 using Akka.Persistence.Hosting;
 using Akka.Util;
 using WebApiTemplate.App.Actors;
@@ -89,26 +87,9 @@ public static class AkkaConfiguration
     public static AkkaConfigurationBuilder ConfigurePersistence(this AkkaConfigurationBuilder builder,
         IServiceProvider serviceProvider)
     {
-        var settings = serviceProvider.GetRequiredService<AkkaSettings>();
-        var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-
-        switch (settings.PersistenceMode)
-        {
-            case PersistenceMode.InMemory:
-                return builder.WithInMemoryJournal().WithInMemorySnapshotStore();
-            case PersistenceMode.Azure:
-            {
-                var connectionStringName = configuration.GetSection("AzureStorageSettings")
-                    .Get<AzureStorageSettings>()?.ConnectionStringName;
-                Debug.Assert(connectionStringName != null, nameof(connectionStringName) + " != null");
-                var connectionString = configuration.GetConnectionString(connectionStringName);
-                Debug.Assert(connectionString != null, nameof(connectionString) + " != null");
-
-                return builder.WithAzurePersistence(connectionString);
-            }
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        // The template ships with in-memory persistence only. To use a durable store,
+        // add the matching Akka.Persistence.* package and configure it here.
+        return builder.WithInMemoryJournal().WithInMemorySnapshotStore();
     }
 
     public static AkkaConfigurationBuilder ConfigureCounterActors(this AkkaConfigurationBuilder builder,

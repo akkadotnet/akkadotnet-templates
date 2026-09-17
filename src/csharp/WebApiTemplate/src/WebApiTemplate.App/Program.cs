@@ -35,7 +35,13 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.Equals("A
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Only redirect to HTTPS when an HTTPS port is actually configured. Under .NET Aspire
+// (and the container image) only an http endpoint is wired, so there is no 443 to redirect to.
+var httpsPort = builder.Configuration["ASPNETCORE_HTTPS_PORT"];
+if (!string.IsNullOrEmpty(httpsPort))
+{
+    app.UseHttpsRedirection();
+}
 
 // Akka.NET liveness + cluster membership health checks are registered by
 // WithAspireClusterBootstrap; map ASP.NET Core endpoints for them here.
