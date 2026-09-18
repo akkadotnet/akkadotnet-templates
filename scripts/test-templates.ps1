@@ -46,16 +46,19 @@ function Test-Template {
     )
 
     $folderName = $name + $parameterName + $value
-    
+
     # Remove dots and - from folderName because in sln it will cause errors when building project
     $folderName = $folderName -replace "[.-]"
-    
-    # Create the project
-    Exec { dotnet new $template -o output//$lang/$folderName -$parameterName $value -lang $lang }
 
-    # Build
+    # Single-letter params use a single dash short-name (-f); longer names need --long-name.
+    $optPrefix = if ($parameterName.Length -eq 1) { "-" } else { "--" }
+
+    # Create the project
+    Exec { dotnet new $template -o output//$lang/$folderName $optPrefix$parameterName $value -lang $lang }
+
+    # Build, test, and publish the container
     Exec { dotnet build output/$lang/$folderName -bl:$bl }
-    Exec { dotnet test output/$lang/$folderName -bl:$bl } # some templates might include unit tests
+    Exec { dotnet test output/$lang/$folderName -bl:$bl }
     Exec { dotnet publish -c Release -t:PublishContainer output/$lang/$folderName -bl:$bl }
 }
 
@@ -74,8 +77,11 @@ function Create-And-Build {
     # Remove dots and - from folderName because in sln it will cause errors when building project
     $folderName = $folderName -replace "[.-]"
 
+    # Single-letter params use a single dash short-name (-f); longer names need --long-name.
+    $optPrefix = if ($parameterName.Length -eq 1) { "-" } else { "--" }
+
     # Create the project
-    Exec { dotnet new $template -o output/$lang/$folderName -$parameterName $value -lang $lang }
+    Exec { dotnet new $template -o output/$lang/$folderName $optPrefix$parameterName $value -lang $lang }
 
     # Build
     Exec { dotnet build output/$lang/$folderName -bl:$bl }
@@ -110,7 +116,9 @@ Create-And-Build "akka.streams" "AkkaStreams" "C#" "f" "net8.0" $binlog
 Create-And-Build "akka.streams" "AkkaStreams" "F#" "f" "net9.0" $binlog
 Create-And-Build "akka.streams" "AkkaStreams" "F#" "f" "net8.0" $binlog
 
-Test-Template "akka.cluster.webapi" "ClusterWebTemplate" "C#" "f" "net9.0" $binlog
-Test-Template "akka.cluster.webapi" "ClusterWebTemplate" "C#" "f" "net8.0" $binlog
+# WebApi template is .NET 10 / Aspire-only: no -f framework choice.
+# Smoke-test both discovery backends, including container publish.
+Test-Template "akka.cluster.webapi" "ClusterWebTemplate" "C#" "Discovery" "redis" $binlog
+Test-Template "akka.cluster.webapi" "ClusterWebTemplate" "C#" "Discovery" "azure" $binlog
 
 # Ignore errors when files are still used by another process

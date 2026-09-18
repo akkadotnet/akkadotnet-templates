@@ -5,7 +5,6 @@ using Microsoft.Extensions.Hosting;
 using WebApiTemplate.App.Actors;
 using WebApiTemplate.App.Configuration;
 using WebApiTemplate.Domain;
-using Xunit.Abstractions;
 
 namespace WebApiTemplate.App.Tests;
 
@@ -46,7 +45,7 @@ public class CounterActorSpecs : TestKit
 
     protected override void ConfigureServices(HostBuilderContext context, IServiceCollection services)
     {
-        var settings = new AkkaSettings() { UseClustering = false, PersistenceMode = PersistenceMode.InMemory };
+        var settings = new AkkaSettings() { UseClustering = false };
         services.AddSingleton(settings);
         base.ConfigureServices(context, services);
     }

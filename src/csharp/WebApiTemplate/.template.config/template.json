@@ -3,7 +3,7 @@
   "author": "Akka",
   "classifications": ["Akka.NET", "Akka.Cluster", "Web API","Cloud", "Service", "Web"],
   "name": "Akka.NET + Akka.Cluster + ASP.NET Core HTTP API",
-  "description": "An out-of-the-box solution for creating an ASP.NET API integrated with Akka.NET.",
+  "description": "An out-of-the-box solution for creating an ASP.NET API integrated with Akka.NET, running on .NET Aspire.",
   "groupIdentity": "Akka.Cluster.WebApi",
   "identity": "Akka.Cluster.WebApi.CSharp",
   "shortName": "akka.cluster.webapi",
@@ -13,25 +13,25 @@
     "type": "solution"
   },
   "symbols": {
-      "Framework": {
+      "Discovery": {
       "type": "parameter",
-      "description": "The target framework for the project.",
+      "description": "The cluster discovery backend used for Akka.Cluster bootstrap.",
       "datatype": "choice",
       "choices": [
         {
-          "choice": "net8.0",
-          "description": "Target net8.0"
+          "choice": "redis",
+          "description": "Use Redis for cluster discovery (default)"
         },
         {
-          "choice": "net9.0",
-          "description": "Target net9.0"
+          "choice": "azure",
+          "description": "Use Azure Table Storage for cluster discovery"
         }
       ],
-      "replaces": "FrameworkParameter",
-      "defaultValue": "net9.0"
-    },
+      "replaces": "DiscoveryBackendParameter",
+      "defaultValue": "redis"
+    }
   },
   "sourceName": "WebApiTemplate",
   "preferNameDirectory": true,
-  "primaryOutputs": [{ "path": "WebApiTemplate.sln" }]
+  "primaryOutputs": [{ "path": "WebApiTemplate.slnx" }]
 }

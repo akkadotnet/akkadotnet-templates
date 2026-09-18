@@ -1,17 +1,13 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Akka.Actor;
+using Akka.Aspire;
 using Akka.Cluster.Hosting;
 using Akka.Cluster.Sharding;
 using Akka.Configuration;
 using Akka.Discovery.Azure;
-using Akka.Discovery.Config.Hosting;
+using Akka.Discovery.Redis;
 using Akka.Hosting;
-using Akka.Management;
-using Akka.Management.Cluster.Bootstrap;
-using Akka.Persistence.Azure;
-using Akka.Persistence.Azure.Hosting;
 using Akka.Persistence.Hosting;
-using Akka.Remote.Hosting;
 using Akka.Util;
 using WebApiTemplate.App.Actors;
 using WebApiTemplate.Domain;
@@ -55,101 +51,45 @@ public static class AkkaConfiguration
         IServiceProvider serviceProvider)
     {
         var settings = serviceProvider.GetRequiredService<AkkaSettings>();
-        var configuration = serviceProvider.GetRequiredService<IConfiguration>();
 
         if (!settings.UseClustering)
             return builder;
 
-        builder
-            .WithRemoting(settings.RemoteOptions);
-
-        if (settings.AkkaManagementOptions is { Enabled: true })
-        {
-            // need to delete seed-nodes so Akka.Management will take precedence
-            var clusterOptions = settings.ClusterOptions;
-            clusterOptions.SeedNodes = Array.Empty<string>();
-
-            builder
-                .WithClustering(clusterOptions)
-                .WithAkkaManagement(hostName: settings.AkkaManagementOptions.Hostname,
-                    settings.AkkaManagementOptions.Port)
-                .WithClusterBootstrap(serviceName: settings.AkkaManagementOptions.ServiceName,
-                    portName: settings.AkkaManagementOptions.PortName,
-                    requiredContactPoints: settings.AkkaManagementOptions.RequiredContactPointsNr);
-
-            switch (settings.AkkaManagementOptions.DiscoveryMethod)
+        // When running under .NET Aspire, the AppHost injects the cluster configuration
+        // (Akka:Cluster:* env vars) and the discovery connection string. WithAspireClusterBootstrap
+        // wires remoting, cluster, Akka.Management, Cluster Bootstrap, and the built-in
+        // liveness + cluster-membership health checks. It no-ops unless Akka:Cluster:Enabled is true.
+        return builder.WithAspireClusterBootstrap(
+            serviceProvider,
+            configureDiscovery: (b, config) =>
             {
-                case DiscoveryMethod.Kubernetes:
-                    break;
-                case DiscoveryMethod.AwsEcsTagBased:
-                    break;
-                case DiscoveryMethod.AwsEc2TagBased:
-                    break;
-                case DiscoveryMethod.AzureTableStorage:
-                {
-                    var connectionStringName = configuration.GetSection("AzureStorageSettings")
-                        .Get<AzureStorageSettings>()?.ConnectionStringName;
-                    Debug.Assert(connectionStringName != null, nameof(connectionStringName) + " != null");
-                    var connectionString = configuration.GetConnectionString(connectionStringName);
+                // The AppHost injects the clustering resource's connection string name via
+                // Akka__Cluster__Clustering__ConnectionStringName; the resource itself is named
+                // "akka-discovery" in the AppHost, so fall back to that literal.
+                var connectionStringName = config["Akka:Cluster:Clustering:ConnectionStringName"] ?? "akka-discovery";
+                var connectionString = config.GetConnectionString(connectionStringName);
+                if (string.IsNullOrEmpty(connectionString))
+                    return;
 
-                    builder.WithAzureDiscovery(options =>
-                    {
-                        options.ServiceName = settings.AkkaManagementOptions.ServiceName;
-                        options.ConnectionString = connectionString;
-                    });
-                    break;
-                }
-                case DiscoveryMethod.Config:
+                var serviceName = config["Akka:Cluster:ServiceName"];
+                if (settings.DiscoveryBackend.Equals("azure", StringComparison.OrdinalIgnoreCase))
                 {
-                    builder
-                        .WithConfigDiscovery(options =>
-                        {
-                            options.Services.Add(new Service
-                            {
-                                Name = settings.AkkaManagementOptions.ServiceName,
-                                Endpoints = new[]
-                                {
-                                    $"{settings.AkkaManagementOptions.Hostname}:{settings.AkkaManagementOptions.Port}",
-                                }
-                            });
-                        });
-                    break;
+                    b.WithAzureDiscovery(connectionString, serviceName);
                 }
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-        else
-        {
-            builder.WithClustering(settings.ClusterOptions);
-        }
-
-        return builder;
+                else
+                {
+                    b.WithRedisDiscovery(connectionString, serviceName);
+                }
+            },
+            clusterConfigure: c => c.Roles = settings.ClusterOptions.Roles);
     }
 
     public static AkkaConfigurationBuilder ConfigurePersistence(this AkkaConfigurationBuilder builder,
         IServiceProvider serviceProvider)
     {
-        var settings = serviceProvider.GetRequiredService<AkkaSettings>();
-        var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-
-        switch (settings.PersistenceMode)
-        {
-            case PersistenceMode.InMemory:
-                return builder.WithInMemoryJournal().WithInMemorySnapshotStore();
-            case PersistenceMode.Azure:
-            {
-                var connectionStringName = configuration.GetSection("AzureStorageSettings")
-                    .Get<AzureStorageSettings>()?.ConnectionStringName;
-                Debug.Assert(connectionStringName != null, nameof(connectionStringName) + " != null");
-                var connectionString = configuration.GetConnectionString(connectionStringName);
-                Debug.Assert(connectionString != null, nameof(connectionString) + " != null");
-
-                return builder.WithAzurePersistence(connectionString);
-            }
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        // The template ships with in-memory persistence only. To use a durable store,
+        // add the matching Akka.Persistence.* package and configure it here.
+        return builder.WithInMemoryJournal().WithInMemorySnapshotStore();
     }
 
     public static AkkaConfigurationBuilder ConfigureCounterActors(this AkkaConfigurationBuilder builder,

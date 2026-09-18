@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>FrameworkParameter</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <!-- Docker container publishing via the .NET SDK (dotnet publish -t:PublishContainer) -->
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <ContainerRepository>webpapitemplate-app</ContainerRepository>
         <ContainerImageTags>$(VersionPrefix);latest</ContainerImageTags>
@@ -12,15 +13,17 @@
     <ItemGroup>
         <ContainerPort Include="80" Type="tcp" />
         <ContainerPort Include="443" Type="tcp" />
-        <ContainerPort Include="8558" Type="tcp" />
-        <ContainerPort Include="8081" Type="tcp" />
+        <!-- Akka remoting/management ports are dynamic under .NET Aspire (injected via
+             Akka__Cluster__RemotePort / Akka__Cluster__ManagementPort), so they are not
+             exposed as fixed container ports. -->
         <ContainerPort Include="9110" Type="tcp" />
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Akka.Aspire" />
         <PackageReference Include="Akka.Cluster.Hosting" />
         <PackageReference Include="Akka.Discovery.Azure" />
-        <PackageReference Include="Akka.HealthCheck.Hosting.Web" />
+        <PackageReference Include="Akka.Discovery.Redis" />
         <PackageReference Include="Akka.Management" />
         <PackageReference Include="Akka.Persistence.Azure.Hosting" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
