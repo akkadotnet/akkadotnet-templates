@@ -1,4 +1,4 @@
-# Akka.Cluster WebApiTemplate
+# Akka.Cluster Web API Template
 
 This template is designed to integrate [Akka.NET](https://getakka.net/) Clusters with ASP.NET Web APIs.
 
